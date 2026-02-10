@@ -451,3 +451,307 @@ export const hotelsBatch3: Hotel[] = [
     priceLevel: 'high'
   }
 ];
+
+// Batch 5: Budget Hotels (41-50) - Price Range: ¥200-400
+
+export const budgetHotels: Hotel[] = [
+  // Hotel 41
+  {
+    id: 41,
+    name: 'Hanting Hotel Hangzhou Westlake',
+    nameZh: '汉庭杭州西湖酒店',
+    slug: 'hanting-hotel-hangzhou-westlake',
+    price: 280,
+    location: 'West Lake',
+    locationZh: '浙江省杭州市上城区解放路108号',
+    description: 'A budget-friendly hotel just steps from West Lake, offering clean and comfortable rooms at affordable prices. Features free WiFi, complimentary breakfast, and a convenient location near major attractions. Perfect for budget travelers and backpackers.',
+    descriptionZh: '汉庭杭州西湖酒店毗邻西湖，以实惠价格提供干净舒适的客房。酒店提供免费WiFi、自助早餐和便利的地理位置，靠近主要景点，是背包客和经济型旅客的理想之选。',
+    rating: 4.0,
+    bookingRating: 8.2,
+    agodaRating: 8.0,
+    hotelscomRating: 8.1,
+    ctripRating: 4.0,
+    fliggyRating: 3.9,
+    bookingReviewCount: 2156,
+    agodaReviewCount: 1789,
+    hotelscomReviewCount: 1923,
+    ctripReviewCount: 4567,
+    fliggyReviewCount: 3890,
+    amenities: ['Free WiFi', 'Complimentary Breakfast', '24-Hour Front Desk', 'Air Conditioning', 'Daily Housekeeping', 'Luggage Storage', 'Non-Smoking Rooms', 'Business Center'],
+    images: [
+      { url: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80', source: 'ctrip', sourceAttribution: '图片来自携程官方' },
+      { url: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800&q=80', source: 'ctrip', sourceAttribution: '图片来自携程官方' }
+    ],
+    priceLevel: 'low'
+  },
+
+  // Hotel 42
+  {
+    id: 42,
+    name: 'Home Inn Hangzhou Wulin Square',
+    nameZh: '如家杭州武林广场店',
+    slug: 'home-inn-hangzhou-wulin-square',
+    price: 220,
+    location: 'Wulin Square',
+    locationZh: '浙江省杭州市下城区体育场路18号',
+    description: 'A reliable budget hotel in the heart of Hangzhou\'s commercial district. Offers simple yet comfortable accommodations with essential amenities. Walking distance to shopping malls, restaurants, and public transportation. Great value for money.',
+    descriptionZh: '如家杭州武林广场店位于杭州商业中心地带，提供简洁舒适的住宿和必需设施。步行可达购物中心、餐厅和公共交通，性价比极高。',
+    rating: 3.9,
+    bookingRating: 8.0,
+    agodaRating: 7.8,
+    hotelscomRating: 7.9,
+    ctripRating: 3.9,
+    fliggyRating: 3.8,
+    bookingReviewCount: 1876,
+    agodaReviewCount: 1523,
+    hotelscomReviewCount: 1654,
+    ctripReviewCount: 3890,
+    fliggyReviewCount: 3245,
+    amenities: ['Free WiFi', 'Breakfast Available', 'Air Conditioning', '24-Hour Check-in', 'Elevator', 'Daily Housekeeping', 'Self Laundry', 'Business Services'],
+    images: [
+      { url: 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800&q=80', source: 'ctrip', sourceAttribution: '图片来自携程官方' },
+      { url: 'https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=800&q=80', source: 'ctrip', sourceAttribution: '图片来自携程官方' }
+    ],
+    priceLevel: 'low'
+  },
+
+  // Hotel 43
+  {
+    id: 43,
+    name: '7 Days Inn Hangzhou Railway Station',
+    nameZh: '7天杭州火车站店',
+    slug: '7-days-inn-hangzhou-railway',
+    price: 180,
+    location: 'Railway Station',
+    locationZh: '浙江省杭州市上城区城站广场8号',
+    description: 'An ultra-budget hotel conveniently located near Hangzhou Railway Station. Provides basic but clean accommodations for travelers on a tight budget. Easy access to trains, buses, and the metro system. Ideal for short stays and transit passengers.',
+    descriptionZh: '7天杭州火车站店位于杭州火车站附近，为预算有限的旅客提供基础但干净的住宿。便捷连接火车、公交和地铁系统，是短途停留和转机旅客的理想选择。',
+    rating: 3.7,
+    bookingRating: 7.6,
+    agodaRating: 7.4,
+    hotelscomRating: 7.5,
+    ctripRating: 3.7,
+    fliggyRating: 3.6,
+    bookingReviewCount: 2345,
+    agodaReviewCount: 1956,
+    hotelscomReviewCount: 2123,
+    ctripReviewCount: 5234,
+    fliggyReviewCount: 4456,
+    amenities: ['Free WiFi', 'Air Conditioning', '24-Hour Front Desk', 'Shared Lounge', 'Self Check-in', 'Non-Smoking Rooms', 'Luggage Storage', 'Public Computer'],
+    images: [
+      { url: 'https://images.unsplash.com/photo-1445019980597-93fa8acb246c?w=800&q=80', source: 'ctrip', sourceAttribution: '图片来自携程官方' },
+      { url: 'https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=800&q=80', source: 'ctrip', sourceAttribution: '图片来自携程官方' }
+    ],
+    priceLevel: 'low'
+  },
+
+  // Hotel 44
+  {
+    id: 44,
+    name: 'GreenTree Inn Hangzhou Xihu',
+    nameZh: '格林豪泰杭州西湖店',
+    slug: 'greentree-inn-hangzhou-xihu',
+    price: 240,
+    location: 'West Lake',
+    locationZh: '浙江省杭州市西湖区黄龙路15号',
+    description: 'A value-conscious hotel near West Lake offering comfortable rooms at reasonable rates. Features complimentary breakfast, free parking, and friendly service. Within walking distance to scenic spots and local eateries. Perfect for families and leisure travelers.',
+    descriptionZh: '格林豪泰杭州西湖店靠近西湖，以合理价格提供舒适客房。酒店提供免费早餐、免费停车场和友好服务，步行可达景点和本地餐厅，适合家庭及休闲旅客。',
+    rating: 3.9,
+    bookingRating: 7.9,
+    agodaRating: 7.7,
+    hotelscomRating: 7.8,
+    ctripRating: 3.9,
+    fliggyRating: 3.8,
+    bookingReviewCount: 1654,
+    agodaReviewCount: 1323,
+    hotelscomReviewCount: 1456,
+    ctripReviewCount: 3456,
+    fliggyReviewCount: 2890,
+    amenities: ['Free WiFi', 'Free Breakfast', 'Free Parking', 'Air Conditioning', '24-Hour Front Desk', 'Elevator', 'Daily Housekeeping', 'Business Center'],
+    images: [
+      { url: 'https://images.unsplash.com/photo-1555854877-bab0e564b8d5?w=800&q=80', source: 'ctrip', sourceAttribution: '图片来自携程官方' },
+      { url: 'https://images.unsplash.com/photo-1584132967334-10e028bd69f7?w=800&q=80', source: 'ctrip', sourceAttribution: '图片来自携程官方' }
+    ],
+    priceLevel: 'low'
+  },
+
+  // Hotel 45
+  {
+    id: 45,
+    name: 'Super 8 Hangzhou Xiaoshan',
+    nameZh: '速8杭州萧山酒店',
+    slug: 'super-8-hangzhou-xiaoshan',
+    price: 200,
+    location: 'Xiaoshan',
+    locationZh: '浙江省杭州市萧山区市心路289号',
+    description: 'An international budget hotel chain offering consistent quality at affordable prices. Located in Xiaoshan District with easy airport access. Features clean rooms, complimentary WiFi, and reliable service. Ideal for business travelers on a budget.',
+    descriptionZh: '速8杭州萧山酒店是国际经济型连锁酒店，以实惠价格提供一贯的品质。位于萧山区，便捷通达机场。酒店设有干净客房、免费WiFi和可靠服务，是预算商务旅客的理想之选。',
+    rating: 3.8,
+    bookingRating: 7.7,
+    agodaRating: 7.5,
+    hotelscomRating: 7.6,
+    ctripRating: 3.8,
+    fliggyRating: 3.7,
+    bookingReviewCount: 1432,
+    agodaReviewCount: 1156,
+    hotelscomReviewCount: 1289,
+    ctripReviewCount: 2890,
+    fliggyReviewCount: 2345,
+    amenities: ['Free WiFi', 'Airport Shuttle', 'Air Conditioning', '24-Hour Front Desk', 'Business Center', 'Wake-up Service', 'Express Check-out', 'Non-Smoking Rooms'],
+    images: [
+      { url: 'https://images.unsplash.com/photo-1526786220381-1d21eedf92bf?w=800&q=80', source: 'ctrip', sourceAttribution: '图片来自携程官方' },
+      { url: 'https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=800&q=80', source: 'ctrip', sourceAttribution: '图片来自携程官方' }
+    ],
+    priceLevel: 'low'
+  },
+
+  // Hotel 46
+  {
+    id: 46,
+    name: 'Jinjiang Inn Hangzhou Qianjiang',
+    nameZh: '锦江之星杭州钱江新城店',
+    slug: 'jinjiang-inn-hangzhou-qianjiang',
+    price: 260,
+    location: 'Qianjiang New Town',
+    locationZh: '浙江省杭州市上城区富春路288号',
+    description: 'A well-known domestic budget hotel brand offering clean and functional accommodations. Located in the developing Qianjiang New Town area with river views. Features comfortable beds, modern bathrooms, and excellent value. Popular among domestic travelers.',
+    descriptionZh: '锦江之星杭州钱江新城店是知名国内经济型酒店品牌，提供干净实用的住宿。位于发展中的钱江新城区域，可欣赏江景。酒店设有舒适床铺、现代浴室，性价比出色，深受国内旅客喜爱。',
+    rating: 4.0,
+    bookingRating: 8.1,
+    agodaRating: 7.9,
+    hotelscomRating: 8.0,
+    ctripRating: 4.0,
+    fliggyRating: 3.9,
+    bookingReviewCount: 1987,
+    agodaReviewCount: 1623,
+    hotelscomReviewCount: 1789,
+    ctripReviewCount: 4123,
+    fliggyReviewCount: 3567,
+    amenities: ['Free WiFi', 'River View Rooms', 'Air Conditioning', '24-Hour Service', 'Business Center', 'Restaurant', 'Meeting Room', 'Self Laundry'],
+    images: [
+      { url: 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=800&q=80', source: 'ctrip', sourceAttribution: '图片来自携程官方' },
+      { url: 'https://images.unsplash.com/photo-1590490360182-c33d57733427?w=800&q=80', source: 'ctrip', sourceAttribution: '图片来自携程官方' }
+    ],
+    priceLevel: 'low'
+  },
+
+  // Hotel 47
+  {
+    id: 47,
+    name: 'Pod Inn Hangzhou Hubin',
+    nameZh: '布丁酒店杭州湖滨店',
+    slug: 'pod-inn-hangzhou-hubin',
+    price: 160,
+    location: 'Hubin',
+    locationZh: '浙江省杭州市上城区平海路58号',
+    description: 'A trendy capsule-style budget hotel targeting young travelers and backpackers. Offers compact but stylish rooms with modern amenities. Located in the vibrant Hubin shopping area near West Lake. Perfect for solo adventurers and short stays.',
+    descriptionZh: '布丁酒店杭州湖滨店是面向年轻旅客和背包客的时尚胶囊经济型酒店。提供紧凑但时尚的客房和现代设施。位于西湖附近热闹的湖滨商圈，是独行冒险家和短途停留的完美选择。',
+    rating: 3.6,
+    bookingRating: 7.4,
+    agodaRating: 7.2,
+    hotelscomRating: 7.3,
+    ctripRating: 3.6,
+    fliggyRating: 3.5,
+    bookingReviewCount: 2890,
+    agodaReviewCount: 2345,
+    hotelscomReviewCount: 2567,
+    ctripReviewCount: 6123,
+    fliggyReviewCount: 5234,
+    amenities: ['Free WiFi', 'Shared Lounge', 'Air Conditioning', '24-Hour Check-in', 'Vending Machines', 'Locker Storage', 'Shared Bathroom Options', 'Tourist Information'],
+    images: [
+      { url: 'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800&q=80', source: 'ctrip', sourceAttribution: '图片来自携程官方' },
+      { url: 'https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=800&q=80', source: 'ctrip', sourceAttribution: '图片来自携程官方' }
+    ],
+    priceLevel: 'low'
+  },
+
+  // Hotel 48
+  {
+    id: 48,
+    name: 'Bestay Hotel Express Hangzhou',
+    nameZh: '百时快捷杭州酒店',
+    slug: 'bestay-express-hangzhou',
+    price: 190,
+    location: 'Gongshu District',
+    locationZh: '浙江省杭州市拱墅区莫干山路688号',
+    description: 'A no-frills budget hotel focused on providing clean, safe, and affordable accommodations. Features essential amenities without unnecessary extras. Located in a residential area with local restaurants and shops nearby. Ideal for practical travelers.',
+    descriptionZh: '百时快捷杭州酒店专注于提供干净、安全、实惠的住宿，无多余装饰。提供必需设施，去除不必要附加项。位于住宅区，附近有本地餐厅和商店，是务实旅客的理想之选。',
+    rating: 3.7,
+    bookingRating: 7.5,
+    agodaRating: 7.3,
+    hotelscomRating: 7.4,
+    ctripRating: 3.7,
+    fliggyRating: 3.6,
+    bookingReviewCount: 1234,
+    agodaReviewCount: 987,
+    hotelscomReviewCount: 1123,
+    ctripReviewCount: 2567,
+    fliggyReviewCount: 2123,
+    amenities: ['Free WiFi', 'Air Conditioning', '24-Hour Front Desk', 'Daily Housekeeping', 'Non-Smoking Rooms', 'Luggage Storage', 'Public Restroom', 'Emergency Exit'],
+    images: [
+      { url: 'https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=800&q=80', source: 'ctrip', sourceAttribution: '图片来自携程官方' },
+      { url: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800&q=80', source: 'ctrip', sourceAttribution: '图片来自携程官方' }
+    ],
+    priceLevel: 'low'
+  },
+
+  // Hotel 49
+  {
+    id: 49,
+    name: 'Motel 168 Hangzhou Binjiang',
+    nameZh: '莫泰168杭州滨江店',
+    slug: 'motel-168-hangzhou-binjiang',
+    price: 230,
+    location: 'Binjiang',
+    locationZh: '浙江省杭州市滨江区江南大道288号',
+    description: 'A popular budget motel chain offering reliable accommodations at wallet-friendly prices. Located in the Binjiang tech district with easy access to subway. Features comfortable beds, clean bathrooms, and friendly staff. Great for extended stays.',
+    descriptionZh: '莫泰168杭州滨江店是受欢迎的经济型汽车旅馆连锁，以亲民价格提供可靠住宿。位于滨江科技区，便捷连接地铁。酒店设有舒适床铺、干净浴室和友好员工，适合长住。',
+    rating: 3.8,
+    bookingRating: 7.6,
+    agodaRating: 7.4,
+    hotelscomRating: 7.5,
+    ctripRating: 3.8,
+    fliggyRating: 3.7,
+    bookingReviewCount: 1567,
+    agodaReviewCount: 1289,
+    hotelscomReviewCount: 1423,
+    ctripReviewCount: 3234,
+    fliggyReviewCount: 2789,
+    amenities: ['Free WiFi', 'Metro Access', 'Air Conditioning', '24-Hour Front Desk', 'Business Services', 'Restaurant', 'Parking', 'Extended Stay Rates'],
+    images: [
+      { url: 'https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=800&q=80', source: 'ctrip', sourceAttribution: '图片来自携程官方' },
+      { url: 'https://images.unsplash.com/photo-1596386461350-32636b2ae87e?w=800&q=80', source: 'ctrip', sourceAttribution: '图片来自携程官方' }
+    ],
+    priceLevel: 'low'
+  },
+
+  // Hotel 50
+  {
+    id: 50,
+    name: 'Hi Inn Hangzhou Xixi',
+    nameZh: '海友酒店杭州西溪店',
+    slug: 'hi-inn-hangzhou-xixi',
+    price: 150,
+    location: 'Xixi Wetland',
+    locationZh: '浙江省杭州市西湖区文三西路478号',
+    description: 'An ultra-budget hotel near Xixi Wetland Park, offering basic accommodations for cost-conscious travelers. Features simple rooms with essential amenities and a laid-back atmosphere. Perfect for nature lovers and backpackers exploring Hangzhou on a shoestring.',
+    descriptionZh: '海友酒店杭州西溪店靠近西溪湿地公园，为注重成本的旅客提供基础住宿。酒店设有配备必需设施的简洁客房和轻松氛围，是预算有限的自然爱好者和背包客探索杭州的理想之选。',
+    rating: 3.5,
+    bookingRating: 7.2,
+    agodaRating: 7.0,
+    hotelscomRating: 7.1,
+    ctripRating: 3.5,
+    fliggyRating: 3.4,
+    bookingReviewCount: 3456,
+    agodaReviewCount: 2890,
+    hotelscomReviewCount: 3123,
+    ctripReviewCount: 7234,
+    fliggyReviewCount: 6123,
+    amenities: ['Free WiFi', 'Wetland Proximity', 'Air Conditioning', '24-Hour Check-in', 'Shared Kitchen', 'Self Laundry', 'Bike Rental', 'Tour Desk'],
+    images: [
+      { url: 'https://images.unsplash.com/photo-1584132967334-10e028bd69f7?w=800&q=80', source: 'ctrip', sourceAttribution: '图片来自携程官方' },
+      { url: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80', source: 'ctrip', sourceAttribution: '图片来自携程官方' }
+    ],
+    priceLevel: 'low'
+  }
+];

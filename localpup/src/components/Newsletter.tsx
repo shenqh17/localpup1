@@ -1,26 +1,17 @@
 'use client'
 
 import { useState } from 'react'
-import { useI18n } from '@/lib/i18n-context'
-import { Send, CheckCircle } from 'lucide-react'
+import { Send, CheckCircle, Mail, Gift, Bell } from 'lucide-react'
+
+const benefits = [
+  { icon: Gift, text: '独家优惠折扣' },
+  { icon: Bell, text: '新酒店首发通知' },
+  { icon: Mail, text: '旅行攻略推送' },
+]
 
 export function Newsletter() {
-  const { locale } = useI18n()
   const [email, setEmail] = useState('')
   const [isSubmitted, setIsSubmitted] = useState(false)
-
-  const isZh = locale === 'zh'
-
-  const t = {
-    title: isZh ? '获取旅游贴士和独家优惠' : 'Get Travel Tips & Exclusive Deals',
-    subtitle: isZh 
-      ? '订阅我们的通讯，获取杭州酒店、景点和特别优惠的最新资讯'
-      : 'Subscribe to our newsletter for the latest updates on Hangzhou hotels, attractions, and special offers',
-    placeholder: isZh ? '输入您的邮箱' : 'Enter your email',
-    button: isZh ? '订阅' : 'Subscribe',
-    privacy: isZh ? '我们尊重您的隐私。可随时取消订阅。' : 'We respect your privacy. Unsubscribe anytime.',
-    done: isZh ? '完成！' : 'Done!',
-  }
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -34,45 +25,70 @@ export function Newsletter() {
   }
 
   return (
-    <section className="py-20 bg-gradient-to-br from-primary-600 to-primary-800">
-      <div className="section-padding max-w-4xl mx-auto text-center">
+    <section className="py-20 bg-gradient-to-br from-primary-600 via-primary-700 to-primary-800 relative overflow-hidden">
+      {/* Decorative Elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute -top-24 -right-24 w-64 h-64 bg-white/5 rounded-full blur-3xl" />
+        <div className="absolute -bottom-24 -left-24 w-80 h-80 bg-accent-500/10 rounded-full blur-3xl" />
+      </div>
+
+      <div className="section-padding max-w-5xl mx-auto text-center relative z-10">
+        {/* Icon */}
+        <div className="w-16 h-16 bg-white/10 backdrop-blur-sm rounded-2xl flex items-center justify-center mx-auto mb-6">
+          <Mail className="w-8 h-8 text-white" />
+        </div>
+
         <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
-          {t.title}
+          订阅我们的Newsletter
         </h2>
-        <p className="text-primary-100 mb-8 max-w-xl mx-auto">
-          {t.subtitle}
+        <p className="text-primary-100 mb-8 max-w-xl mx-auto text-lg">
+          获取杭州酒店独家优惠、新开业酒店资讯和精选旅行攻略
         </p>
 
+        {/* Benefits */}
+        <div className="flex flex-wrap justify-center gap-4 mb-8">
+          {benefits.map((benefit, index) => (
+            <div key={index} className="flex items-center gap-2 text-white/80 text-sm">
+              <benefit.icon className="w-4 h-4" />
+              <span>{benefit.text}</span>
+            </div>
+          ))}
+        </div>
+
+        {/* Form */}
         <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto">
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder={t.placeholder}
-            className="flex-1 px-6 py-4 rounded-xl text-slate-900 outline-none focus:ring-2 focus:ring-accent-400"
-            required
-          />
+          <div className="relative flex-1">
+            <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="请输入您的邮箱地址"
+              className="w-full pl-12 pr-6 py-4 rounded-xl text-slate-900 outline-none focus:ring-2 focus:ring-accent-400 border-0"
+              required
+            />
+          </div>
           <button
             type="submit"
             disabled={isSubmitted}
-            className="px-8 py-4 bg-accent-500 text-white font-semibold rounded-xl hover:bg-accent-600 transition-colors disabled:opacity-70 flex items-center justify-center gap-2"
+            className="px-8 py-4 bg-accent-500 text-white font-semibold rounded-xl hover:bg-accent-600 transition-colors disabled:opacity-70 flex items-center justify-center gap-2 whitespace-nowrap"
           >
             {isSubmitted ? (
               <>
                 <CheckCircle className="w-5 h-5" />
-                {t.done}
+                订阅成功！
               </>
             ) : (
               <>
-                {t.button}
+                立即订阅
                 <Send className="w-5 h-5" />
               </>
             )}
           </button>
         </form>
 
-        <p className="text-primary-200 text-sm mt-4">
-          {t.privacy}
+        <p className="text-primary-200 text-sm mt-6">
+          我们尊重您的隐私，您可以随时取消订阅。不会发送垃圾邮件。
         </p>
       </div>
     </section>
