@@ -1,0 +1,70 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/localpup
+      - MINIMAX_API_KEY=${MINIMAX_API_KEY}
+      - BOOKING_AFFILIATE_ID=${BOOKING_AFFILIATE_ID}
+      - CTRIP_AFFILIATE_ID=${CTRIP_AFFILIATE_ID}
+    depends_on:
+      - db
+      - redis
+    networks:
+      - localpup-network
+    restart: unless-stopped
+
+  db:
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=localpup
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - localpup-network
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    volumes:
+      - redis-data:/data
+    ports:
+      - "6379:6379"
+    networks:
+      - localpup-network
+    restart: unless-stopped
+
+  scraper:
+    build:
+      context: .
+      dockerfile: Dockerfile.scraper
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/localpup
+      - PYTHONUNBUFFERED=1
+    depends_on:
+      - db
+    networks:
+      - localpup-network
+    # 每天凌晨 2 点运行
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 24h
+
+volumes:
+  postgres-data:
+  redis-data:
+
+networks:
+  localpup-network:
+    driver: bridge

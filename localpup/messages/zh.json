@@ -1,0 +1,110 @@
+{
+  "metadata": {
+    "title": "LocalPup - 发现杭州最佳酒店与体验",
+    "description": "您探索杭州最佳酒店、景点和美食的终极指南。专为国际旅行者策划，配备AI智能推荐。",
+    "keywords": "杭州酒店, 杭州旅游, 西湖, 中国旅游, 酒店预订"
+  },
+  "nav": {
+    "home": "首页",
+    "hotels": "酒店",
+    "attractions": "景点",
+    "dining": "美食",
+    "guide": "旅游指南",
+    "videos": "视频",
+    "exploreHotels": "探索酒店",
+    "search": "搜索",
+    "language": "语言"
+  },
+  "hero": {
+    "title1": "探索杭州的",
+    "title2": "隐藏瑰宝",
+    "subtitle": "为挑剔的国际旅行者精心挑选的酒店、景点和美食体验",
+    "location": "目的地",
+    "locationValue": "中国杭州",
+    "checkIn": "入住日期",
+    "checkOut": "退房日期",
+    "addDates": "选择日期",
+    "guests": "入住人数",
+    "guestsValue": "2位成人",
+    "searchPlaceholder": "搜索酒店、区域或地标...",
+    "searchButton": "搜索酒店",
+    "stats": {
+      "hotels": "500+",
+      "hotelsLabel": "精选酒店",
+      "travelers": "5万+",
+      "travelersLabel": "满意旅客",
+      "rating": "4.9",
+      "ratingLabel": "平均评分"
+    }
+  },
+  "features": {
+    "title1": "AI智能精选",
+    "desc1": "我们的智能系统分析数千条评论，为您带来最佳推荐",
+    "title2": "真实验证评价",
+    "desc2": "所有评分和评价均来自Booking.com和携程等可信平台",
+    "title3": "多语言支持",
+    "desc3": "完整的中英文支持，更多语言即将推出",
+    "title4": "最优价格保证",
+    "desc4": "我们比较多个平台的价格，确保您获得最优惠的价格"
+  },
+  "hotels": {
+    "badge": "为您精选",
+    "title": "杭州精选酒店",
+    "subtitle": "探索我们精心挑选的顶级住宿，从豪华度假村到精品酒店",
+    "viewAll": "查看全部酒店",
+    "featured": "精选",
+    "perNight": "每晚",
+    "reviews": "条评价",
+    "viewDetails": "查看详情",
+    "amenities": {
+      "more": "+{count}"
+    },
+    "imageSource": {
+      "ctrip": "图片来自携程官方",
+      "booking": "图片来自Booking.com",
+      "official": "官方图片"
+    }
+  },
+  "cityGuide": {
+    "badge": "城市指南",
+    "title": "探索杭州",
+    "subtitle": "从宁静的西湖到古老的寺庙，探索使杭州成为中国最受欢迎目的地之一的独特魅力",
+    "westLake": {
+      "title": "西湖",
+      "desc": "联合国教科文组织世界遗产，杭州的璀璨明珠"
+    },
+    "lingyin": {
+      "title": "灵隐寺",
+      "desc": "中国最大的佛教寺庙之一"
+    },
+    "xixi": {
+      "title": "西溪湿地",
+      "desc": "中国第一个国家湿地公园"
+    },
+    "hefang": {
+      "title": "河坊街",
+      "desc": "传统手工艺和小吃的古街"
+    },
+    "learnMore": "了解更多"
+  },
+  "newsletter": {
+    "title": "获取旅游贴士和独家优惠",
+    "subtitle": "订阅我们的通讯，获取杭州酒店、景点和特别优惠的最新资讯",
+    "placeholder": "输入您的邮箱",
+    "button": "订阅",
+    "privacy": "我们尊重您的隐私。可随时取消订阅。"
+  },
+  "footer": {
+    "description": "您探索杭州最佳酒店、景点和美食体验的可靠伙伴。",
+    "explore": "探索",
+    "company": "公司",
+    "support": "支持",
+    "copyright": "© 2026 LocalPup. 保留所有权利。",
+    "contact": "contact@localpup.com"
+  },
+  "videos": {
+    "title": "精选视频",
+    "subtitle": "观看沉浸式视频，展示杭州最佳酒店和体验",
+    "badge": "视频库"
+  }
+}

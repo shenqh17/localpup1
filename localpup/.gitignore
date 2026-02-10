@@ -1,0 +1,12 @@
+/.env
+/.env.local
+/node_modules
+/.next
+/out
+*.log
+data/
+__pycache__/
+*.pyc
+.DS_Store
+*.db
+/prisma/migrations

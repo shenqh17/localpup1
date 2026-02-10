@@ -1,0 +1,11 @@
+{
+  "project": "LocalPup",
+  "tasks": [
+    {"id": "T1", "agent": "minimax", "task": "生成21-35号酒店详细描述（15家）", "status": "pending", "priority": 1},
+    {"id": "T2", "agent": "qoder", "task": "创建酒店图片批量添加脚本", "status": "pending", "priority": 2},
+    {"id": "T3", "agent": "minimax", "task": "生成36-50号酒店数据（15家）", "status": "pending", "priority": 3},
+    {"id": "T4", "agent": "openclaw", "task": "整合所有数据并验证", "status": "pending", "priority": 4},
+    {"id": "T5", "agent": "qoder", "task": "开发酒店详情页组件", "status": "pending", "priority": 5}
+  ],
+  "status": "running"
+}

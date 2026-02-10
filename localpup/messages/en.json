@@ -1,0 +1,110 @@
+{
+  "metadata": {
+    "title": "LocalPup - Discover Hangzhou's Finest Hotels & Experiences",
+    "description": "Your ultimate guide to the best hotels, attractions, and dining in Hangzhou. Curated for international travelers with AI-powered recommendations.",
+    "keywords": "Hangzhou hotels, Hangzhou travel, West Lake, China travel, hotel booking"
+  },
+  "nav": {
+    "home": "Home",
+    "hotels": "Hotels",
+    "attractions": "Attractions",
+    "dining": "Dining",
+    "guide": "Travel Guide",
+    "videos": "Videos",
+    "exploreHotels": "Explore Hotels",
+    "search": "Search",
+    "language": "Language"
+  },
+  "hero": {
+    "title1": "Discover Hangzhou's",
+    "title2": "Hidden Gems",
+    "subtitle": "Curated hotels, attractions, and dining experiences for the discerning international traveler",
+    "location": "Location",
+    "locationValue": "Hangzhou, China",
+    "checkIn": "Check-in",
+    "checkOut": "Check-out",
+    "addDates": "Add dates",
+    "guests": "Guests",
+    "guestsValue": "2 Adults",
+    "searchPlaceholder": "Search hotels, areas, or landmarks...",
+    "searchButton": "Search Hotels",
+    "stats": {
+      "hotels": "500+",
+      "hotelsLabel": "Curated Hotels",
+      "travelers": "50K+",
+      "travelersLabel": "Happy Travelers",
+      "rating": "4.9",
+      "ratingLabel": "Average Rating"
+    }
+  },
+  "features": {
+    "title1": "AI-Powered Curation",
+    "desc1": "Our intelligent system analyzes thousands of reviews to bring you only the best recommendations",
+    "title2": "Verified Reviews",
+    "desc2": "All ratings and reviews are aggregated from trusted platforms like Booking.com and Ctrip",
+    "title3": "Multi-Language Support",
+    "desc3": "Full English and Chinese support with more languages coming soon",
+    "title4": "Best Price Guarantee",
+    "desc4": "We compare prices across multiple platforms to ensure you get the best deal"
+  },
+  "hotels": {
+    "badge": "Handpicked for You",
+    "title": "Featured Hotels in Hangzhou",
+    "subtitle": "Discover our curated selection of the finest accommodations, from luxury resorts to boutique hotels",
+    "viewAll": "View All Hotels",
+    "featured": "Featured",
+    "perNight": "per night",
+    "reviews": "reviews",
+    "viewDetails": "View Details",
+    "amenities": {
+      "more": "+{count}"
+    },
+    "imageSource": {
+      "ctrip": "Images from Ctrip Official",
+      "booking": "Images from Booking.com",
+      "official": "Official Images"
+    }
+  },
+  "cityGuide": {
+    "badge": "City Guide",
+    "title": "Explore Hangzhou",
+    "subtitle": "From the serene West Lake to ancient temples, discover what makes Hangzhou one of China's most beloved destinations",
+    "westLake": {
+      "title": "West Lake",
+      "desc": "A UNESCO World Heritage site and the crown jewel of Hangzhou"
+    },
+    "lingyin": {
+      "title": "Lingyin Temple",
+      "desc": "One of the largest Buddhist temples in China"
+    },
+    "xixi": {
+      "title": "Xixi Wetland",
+      "desc": "China's first national wetland park"
+    },
+    "hefang": {
+      "title": "Hefang Street",
+      "desc": "Ancient street with traditional crafts and snacks"
+    },
+    "learnMore": "Learn More"
+  },
+  "newsletter": {
+    "title": "Get Travel Tips & Exclusive Deals",
+    "subtitle": "Subscribe to our newsletter for the latest updates on Hangzhou hotels, attractions, and special offers",
+    "placeholder": "Enter your email",
+    "button": "Subscribe",
+    "privacy": "We respect your privacy. Unsubscribe anytime."
+  },
+  "footer": {
+    "description": "Your trusted companion for discovering Hangzhou's finest hotels, attractions, and dining experiences.",
+    "explore": "Explore",
+    "company": "Company",
+    "support": "Support",
+    "copyright": "© 2026 LocalPup. All rights reserved.",
+    "contact": "contact@localpup.com"
+  },
+  "videos": {
+    "title": "Featured Videos",
+    "subtitle": "Watch immersive videos showcasing the best hotels and experiences in Hangzhou",
+    "badge": "Video Gallery"
+  }
+}
