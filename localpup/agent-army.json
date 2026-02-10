@@ -1,0 +1,40 @@
+{
+  "mission": "LocalPup 100家酒店攻坚",
+  "commander": "贾维斯",
+  "agents": [
+    {
+      "id": "A1",
+      "name": "数据突击手-Alpha1",
+      "role": "酒店数据生成",
+      "target": "完成21-40号酒店（20家高端）",
+      "weapon": "minimax/MiniMax-M2.1",
+      "status": "待命"
+    },
+    {
+      "id": "A2", 
+      "name": "数据突击手-Alpha2",
+      "role": "酒店数据生成",
+      "target": "完成41-60号酒店（20家中端）",
+      "weapon": "minimax/MiniMax-M2.1",
+      "status": "待命"
+    },
+    {
+      "id": "B1",
+      "name": "前端工程师-Beta1", 
+      "role": "网站开发",
+      "target": "优化酒店列表页+详情页",
+      "weapon": "moonshot/kimi-k2.5",
+      "status": "待命"
+    },
+    {
+      "id": "B2",
+      "name": "部署专家-Beta2",
+      "role": "部署配置",
+      "target": "域名配置+SSL+性能优化",
+      "weapon": "moonshot/kimi-k2.5",
+      "status": "待命"
+    }
+  ],
+  "status": "作战中",
+  "startTime": "2026-02-11T00:35:00+08:00"
+}
