@@ -1,0 +1,24 @@
+{
+  "project": "LocalPup",
+  "agents": [
+    {
+      "name": "数据生成员-Alpha",
+      "role": "酒店数据生成专员",
+      "tasks": [
+        {"id": "T1", "task": "生成21-35号酒店（15家高端¥800-1500）", "status": "pending"},
+        {"id": "T2", "task": "生成36-50号酒店（15家中端¥400-800）", "status": "pending"}
+      ]
+    },
+    {
+      "name": "开发工程师-Beta", 
+      "role": "网站开发工程师",
+      "tasks": [
+        {"id": "T3", "task": "优化酒店卡片UI组件", "status": "pending"},
+        {"id": "T4", "task": "添加酒店筛选功能", "status": "pending"},
+        {"id": "T5", "task": "优化移动端响应式", "status": "pending"}
+      ]
+    }
+  ],
+  "coordinator": "贾维斯",
+  "status": "running"
+}
