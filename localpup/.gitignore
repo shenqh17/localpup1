@@ -4,7 +4,7 @@
 /.next
 /out
 *.log
-data/
+# data/  # Commented out to allow src/data/hotels100.ts
 __pycache__/
 *.pyc
 .DS_Store
