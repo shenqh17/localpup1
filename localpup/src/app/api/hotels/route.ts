@@ -1,71 +1,46 @@
 import { NextResponse } from 'next/server'
-import { PrismaClient } from '@prisma/client'
-
-const prisma = new PrismaClient()
+import { hotels } from '@/data/hotels100'
 
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url)
     
-    // 查询参数
-    const city = searchParams.get('city') || 'Hangzhou'
-    const ratingMin = parseFloat(searchParams.get('rating_min') || '0')
-    const priceMin = parseInt(searchParams.get('price_min') || '0')
-    const priceMax = parseInt(searchParams.get('price_max') || '999999')
+    const location = searchParams.get('location')
+    const minPrice = parseInt(searchParams.get('minPrice') || '0')
+    const maxPrice = parseInt(searchParams.get('maxPrice') || '99999')
+    const amenities = searchParams.get('amenities')?.split(',') || []
     const page = parseInt(searchParams.get('page') || '1')
     const limit = parseInt(searchParams.get('limit') || '20')
-    const sortBy = searchParams.get('sort') || 'overallRating'
-    const order = searchParams.get('order') || 'desc'
     
-    const skip = (page - 1) * limit
+    let filtered = hotels
     
-    // 构建查询条件
-    const where = {
-      city,
-      isActive: true,
-      overallRating: { gte: ratingMin },
-      AND: [
-        {
-          OR: [
-            { priceRangeMin: { gte: priceMin, lte: priceMax } },
-            { priceRangeMax: { gte: priceMin, lte: priceMax } },
-          ],
-        },
-      ],
+    if (location && location !== 'All') {
+      filtered = filtered.filter(h => 
+        h.location.toLowerCase().includes(location.toLowerCase())
+      )
     }
     
-    // 获取酒店列表
-    const hotels = await prisma.hotel.findMany({
-      where,
-      include: {
-        images: {
-          where: { isOfficial: true },
-          orderBy: { order: 'asc' },
-          take: 1,
-        },
-      },
-      orderBy: { [sortBy]: order },
-      skip,
-      take: limit,
-    })
+    filtered = filtered.filter(h => h.price >= minPrice && h.price <= maxPrice)
     
-    // 获取总数
-    const total = await prisma.hotel.count({ where })
+    if (amenities.length > 0 && amenities[0] !== '') {
+      filtered = filtered.filter(h => 
+        amenities.some(a => h.amenities.includes(a))
+      )
+    }
+    
+    const skip = (page - 1) * limit
+    const paginated = filtered.slice(skip, skip + limit)
     
     return NextResponse.json({
-      success: true,
-      data: hotels,
-      pagination: {
-        page,
-        limit,
-        total,
-        totalPages: Math.ceil(total / limit),
-      },
+      hotels: paginated,
+      total: filtered.length,
+      page,
+      totalPages: Math.ceil(filtered.length / limit)
     })
   } catch (error) {
-    console.error('Error fetching hotels:', error)
+    console.error('Hotels API Error:', error)
     return NextResponse.json(
-      { success: false, error: 'Failed to fetch hotels' },
+      { error: 'Failed to fetch hotels', hotels: [], total: 0, page: 1, totalPages: 0 },
       { status: 500 }
     )
   }
