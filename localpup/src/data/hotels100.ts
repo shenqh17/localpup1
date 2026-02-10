@@ -1040,4 +1040,13 @@ export const midHotels: Hotel[] = [
   },
 ]
 
-export default hotels
+// 合并所有酒店数据
+export const allHotels: Hotel[] = [
+  ...hotels,
+  ...highHotels,
+  ...midHotels
+]
+
+// 导出合并后的数据作为默认 hotels
+export { allHotels as hotels }
+export default allHotels
