@@ -1,0 +1,25 @@
+# 📰 AI Agent 热点新闻 | 2026年02月09日
+
+## 📌 今日要闻
+
+### 1. OpenAI 发布新一代 Agent 框架
+**时间**: 2026年2月初  
+OpenAI 推出企业级 Agent 开发平台，支持多 Agent 协作，新增长期记忆功能。
+
+### 2. 谷歌 Gemini Agent 生态系统扩展
+**时间**: 2026年1月下旬  
+Gemini 2.0 Pro 支持原生多模态 Agent 开发，推出 Agent Marketplace。
+
+### 3. 中国 AI Agent 市场动态
+- 百度文心一言推出智能体平台
+- 阿里通义千问 Agent 接入钉钉
+- 字节跳动 Coze 平台用户突破 100 万
+- Minimax 发布 M2.1 模型，Coding Plan 每5小时100次免费
+
+---
+
+💡 **请手动复制以下内容到 vivo 办公套件原子笔记**
+
+（设置 Apple Shortcuts 自动化后，此步骤可半自动完成）
+
+🤖 Powered by OpenClaw Agent | 生成时间：07:00

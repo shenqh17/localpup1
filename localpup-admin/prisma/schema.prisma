@@ -1,0 +1,338 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Hotel {
+  id                String   @id @default(uuid())
+  name              String
+  nameEn            String?
+  slug              String   @unique
+  address           String
+  city              String   @default("Hangzhou")
+  district          String?
+  latitude          Float?
+  longitude         Float?
+  description       String   @db.Text
+  descriptionEn     String?  @db.Text
+  aiSummary         String?  @db.Text  // AI生成的总结
+  aiSummaryEn       String?  @db.Text
+  
+  // 平台评分
+  bookingRating     Float?
+  bookingReviewCount Int?
+  ctripRating       Float?
+  ctripReviewCount  Int?
+  tripadvisorRating Float?
+  
+  // 综合评分
+  overallRating     Float    @default(0)
+  reviewCount       Int      @default(0)
+  
+  // 价格范围
+  priceRangeMin     Int?
+  priceRangeMax     Int?
+  currency          String   @default("CNY")
+  
+  // 设施
+  amenities         String[] // 存储设施标签
+  
+  // 外部链接
+  bookingUrl        String?
+  ctripUrl          String?
+  
+  // 状态
+  isActive          Boolean  @default(true)
+  isFeatured        Boolean  @default(false)
+  
+  // 关联
+  images            HotelImage[]
+  reviews           Review[]
+  
+  // 时间戳
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  lastScrapedAt     DateTime?
+  
+  @@index([city])
+  @@index([overallRating])
+  @@index([isFeatured])
+  @@index([slug])
+}
+
+model HotelImage {
+  id                String   @id @default(uuid())
+  hotelId           String
+  hotel             Hotel    @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+  
+  url               String
+  caption           String?
+  captionEn         String?
+  isOfficial        Boolean  @default(true)  // 是否官方照片
+  order             Int      @default(0)
+  source            String   @default("ctrip") // 来源平台: ctrip, booking, official
+  sourceAttribution String?  @db.Text         // 图片来源说明，如 "Images from Ctrip Official"
+  
+  createdAt         DateTime @default(now())
+  
+  @@index([hotelId])
+}
+
+model Review {
+  id          String   @id @default(uuid())
+  hotelId     String
+  hotel       Hotel    @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+  
+  platform    String   // booking, ctrip, tripadvisor
+  author      String?
+  rating      Float
+  content     String   @db.Text
+  contentEn   String?  @db.Text
+  date        DateTime?
+  isUsedForAi Boolean  @default(false) // 是否被用于AI总结
+  
+  createdAt   DateTime @default(now())
+  
+  @@index([hotelId])
+  @@index([platform])
+}
+
+model ScrapingLog {
+  id          String   @id @default(uuid())
+  platform    String   // booking, ctrip
+  hotelName   String?
+  status      String   // success, error, partial
+  message     String?
+  itemsScraped Int     @default(0)
+  
+  createdAt   DateTime @default(now())
+  
+  @@index([createdAt])
+}
+
+model ApiKey {
+  id          String   @id @default(uuid())
+  key         String   @unique
+  name        String
+  isActive    Boolean  @default(true)
+  rateLimit   Int      @default(1000) // 每日请求限制
+  requestsToday Int    @default(0)
+  lastResetAt DateTime @default(now())
+  
+  createdAt   DateTime @default(now())
+}
+
+// 景点模型
+model Attraction {
+  id                String   @id @default(uuid())
+  name              String
+  nameEn            String?
+  slug              String   @unique
+  address           String
+  city              String   @default("Hangzhou")
+  district          String?
+  latitude          Float?
+  longitude         Float?
+  description       String   @db.Text
+  descriptionEn     String?  @db.Text
+  aiSummary         String?  @db.Text
+  aiSummaryEn       String?  @db.Text
+  
+  // 景点特定字段
+  category          String   // 分类：自然、历史、文化、现代
+  visitDuration     String?  // 建议游览时长，如 "2-3 hours"
+  bestTimeToVisit   String?  // 最佳游览时间
+  tips              String?  @db.Text // 游览提示
+  
+  // 门票信息
+  ticketPrice       Int?     // 门票价格（0表示免费）
+  ticketCurrency    String   @default("CNY")
+  isFree            Boolean  @default(false)
+  bookingRequired   Boolean  @default(false)
+  
+  // 开放时间
+  openTime          String?  // 如 "08:00-17:00"
+  openDays          String   @default("Daily") // 开放日期
+  
+  // 评分
+  googleRating      Float?
+  googleReviewCount Int?
+  ctripRating       Float?
+  ctripReviewCount  Int?
+  tripadvisorRating Float?
+  overallRating     Float    @default(0)
+  reviewCount       Int      @default(0)
+  
+  // 设施
+  facilities        String[] // 停车场、餐厅、商店等
+  activities        String[] // 可参与的活动
+  
+  // 外部链接
+  officialUrl       String?
+  ctripUrl          String?
+  
+  // 状态
+  isActive          Boolean  @default(true)
+  isFeatured        Boolean  @default(false)
+  isUnesco          Boolean  @default(false) // 是否世界遗产
+  
+  // 关联
+  images            AttractionImage[]
+  nearbyHotels      String[] // 附近酒店ID列表
+  
+  // 时间戳
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  lastScrapedAt     DateTime?
+  
+  @@index([city])
+  @@index([category])
+  @@index([overallRating])
+  @@index([isFeatured])
+  @@index([slug])
+}
+
+model AttractionImage {
+  id            String   @id @default(uuid())
+  attractionId  String
+  attraction    Attraction @relation(fields: [attractionId], references: [id], onDelete: Cascade)
+  
+  url           String
+  caption       String?
+  captionEn     String?
+  isOfficial    Boolean  @default(true)
+  order         Int      @default(0)
+  source        String   @default("official")
+  
+  createdAt     DateTime @default(now())
+  
+  @@index([attractionId])
+}
+
+// 餐厅模型
+model Restaurant {
+  id                String   @id @default(uuid())
+  name              String
+  nameEn            String?
+  slug              String   @unique
+  address           String
+  city              String   @default("Hangzhou")
+  district          String?
+  latitude          Float?
+  longitude         Float?
+  description       String   @db.Text
+  descriptionEn     String?  @db.Text
+  aiSummary         String?  @db.Text
+  aiSummaryEn       String?  @db.Text
+  
+  // 餐厅特定字段
+  cuisine           String[] // 菜系：杭帮菜、川菜、西餐等
+  priceRange        String   // 价格区间：$, $$, $$$, $$$$
+  pricePerPerson    Int?     // 人均消费
+  
+  // 营业时间
+  openTime          String?  // 如 "11:00-14:00, 17:00-22:00"
+  openDays          String   @default("Daily")
+  
+  // 特色
+  specialties       String[] // 招牌菜
+  features          String[] // 特色：景观位、包间、户外等
+  
+  // 评分
+  googleRating      Float?
+  googleReviewCount Int?
+  dianpingRating    Float?   // 大众点评
+  dianpingReviewCount Int?
+  tripadvisorRating Float?
+  overallRating     Float    @default(0)
+  reviewCount       Int      @default(0)
+  
+  // 预订
+  reservationRequired Boolean @default(false)
+  reservationPhone    String?
+  
+  // 外部链接
+  dianpingUrl       String?
+  officialUrl       String?
+  
+  // 状态
+  isActive          Boolean  @default(true)
+  isFeatured        Boolean  @default(false)
+  isMichelin        Boolean  @default(false) // 是否米其林
+  michelinStars     Int?     // 米其林星级
+  
+  // 关联
+  images            RestaurantImage[]
+  nearbyHotels      String[]
+  nearbyAttractions String[]
+  
+  // 时间戳
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  lastScrapedAt     DateTime?
+  
+  @@index([city])
+  @@index([cuisine])
+  @@index([overallRating])
+  @@index([isFeatured])
+  @@index([slug])
+}
+
+model RestaurantImage {
+  id            String   @id @default(uuid())
+  restaurantId  String
+  restaurant    Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  
+  url           String
+  caption       String?
+  captionEn     String?
+  isOfficial    Boolean  @default(true)
+  order         Int      @default(0)
+  source        String   @default("dianping")
+  
+  createdAt     DateTime @default(now())
+  
+  @@index([restaurantId])
+}
+
+// 视频展示模型
+model Video {
+  id            String   @id @default(uuid())
+  
+  title         String   // 英文标题
+  titleZh       String?  // 中文标题
+  description   String?  @db.Text  // 英文描述
+  descriptionZh String?  @db.Text  // 中文描述
+  
+  // 视频信息
+  platform      String   // youtube 或 tiktok
+  videoId       String   // YouTube video ID 或 TikTok video ID
+  thumbnailUrl  String?  // 缩略图URL
+  duration      String?  // 时长，如 "5:32"
+  
+  // 分类和排序
+  category      String   @default("hotel") // hotel, attraction, dining, guide
+  sortOrder     Int      @default(0)
+  
+  // 关联
+  hotelId       String?  // 关联酒店（可选）
+  
+  // 状态
+  isActive      Boolean  @default(true)
+  isFeatured    Boolean  @default(false)
+  
+  // 时间戳
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  
+  @@index([category])
+  @@index([isFeatured])
+  @@index([isActive])
+}
