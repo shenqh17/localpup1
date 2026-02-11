@@ -53,7 +53,7 @@ const hotelImages = {
   ]
 }
 
-export const hotels: Hotel[] = [
+export const originalHotels: Hotel[] = [
   // 超豪华酒店 (Booking 9.5+, 携程 4.8+)
   {
     id: '1',
@@ -2622,7 +2622,7 @@ export const hostelHotels: Hotel[] = [
 
 // 更新合并所有酒店数据
 export const allHotels: Hotel[] = [
-  ...hotels,
+  ...originalHotels,
   ...luxuryHotelsExtra,
   ...highHotels,
   ...highHotelsExtra,

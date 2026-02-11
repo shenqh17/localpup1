@@ -346,7 +346,7 @@ export default function HotelDetailPage() {
           <Image
             src={hotel.images[currentImageIndex]?.url || hotel.image}
             alt={isZh 
-              ? hotel.images[currentImageIndex]?.captionZh || hotel.nameZh 
+              ? hotel.images[currentImageIndex]?.captionZh || hotel.nameZh || hotel.name
               : hotel.images[currentImageIndex]?.caption || hotel.name
             }
             fill
@@ -705,7 +705,7 @@ export default function HotelDetailPage() {
             <Image
               src={hotel.images[currentImageIndex]?.url || hotel.image}
               alt={isZh 
-                ? hotel.images[currentImageIndex]?.captionZh || hotel.nameZh 
+                ? hotel.images[currentImageIndex]?.captionZh || hotel.nameZh || hotel.name
                 : hotel.images[currentImageIndex]?.caption || hotel.name
               }
               fill

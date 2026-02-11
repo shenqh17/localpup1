@@ -246,7 +246,7 @@ export function Hero() {
                         <div className="w-12 h-12 rounded-lg overflow-hidden bg-slate-100 flex-shrink-0">
                           <Image
                             src={hotel.image}
-                            alt={isZh ? hotel.nameZh : hotel.name}
+                            alt={isZh ? (hotel.nameZh || hotel.name) : hotel.name}
                             width={48}
                             height={48}
                             className="object-cover w-full h-full"
