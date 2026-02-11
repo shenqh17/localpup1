@@ -3,7 +3,7 @@
 import { useState, useMemo, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Star, MapPin, Filter, ChevronLeft, ChevronRight, ChevronDown, X, SortAsc } from 'lucide-react'
+import { Star, MapPin, Filter, ChevronLeft, ChevronRight, ChevronDown, X, SortAsc, Building2 } from 'lucide-react'
 import { hotels } from '@/data/hotels100'
 import { useI18n } from '@/lib/i18n-context'
 
@@ -32,6 +32,24 @@ function StarRating({ rating, size = 'sm' }: { rating: number; size?: 'xs' | 'sm
   )
 }
 
+// 根据价格获取酒店类型
+function getHotelTypeByPrice(price: number): string {
+  if (price >= 1500) return 'luxury'
+  if (price >= 800) return 'premium'
+  if (price >= 400) return 'midscale'
+  if (price >= 200) return 'budget'
+  return 'homestay'
+}
+
+// 酒店类型标签
+const hotelTypes = [
+  { key: 'luxury', labelZh: '豪华', labelEn: 'Luxury', minPrice: 1500, maxPrice: Infinity, color: 'bg-purple-500' },
+  { key: 'premium', labelZh: '高端', labelEn: 'Premium', minPrice: 800, maxPrice: 1500, color: 'bg-indigo-500' },
+  { key: 'midscale', labelZh: '中端', labelEn: 'Midscale', minPrice: 400, maxPrice: 800, color: 'bg-blue-500' },
+  { key: 'budget', labelZh: '经济', labelEn: 'Budget', minPrice: 200, maxPrice: 400, color: 'bg-green-500' },
+  { key: 'homestay', labelZh: '民宿', labelEn: 'Homestay', minPrice: 0, maxPrice: 200, color: 'bg-amber-500' },
+]
+
 export default function HotelsPage() {
   const { t, locale } = useI18n()
   const [currentImageIndex, setCurrentImageIndex] = useState<Record<string, number>>({})
@@ -40,29 +58,33 @@ export default function HotelsPage() {
   const [selectedPriceRange, setSelectedPriceRange] = useState<string | null>(null)
   const [selectedLocation, setSelectedLocation] = useState<string>('')
   const [selectedRating, setSelectedRating] = useState<number | null>(null)
+  const [selectedHotelType, setSelectedHotelType] = useState<string | null>(null)
   const [showLocationDropdown, setShowLocationDropdown] = useState(false)
+  const [showTypeDropdown, setShowTypeDropdown] = useState(false)
   const [sortBy, setSortBy] = useState<'recommended' | 'price-asc' | 'price-desc' | 'rating-desc'>('recommended')
   
   const locationDropdownRef = useRef<HTMLDivElement>(null)
+  const typeDropdownRef = useRef<HTMLDivElement>(null)
 
   const isZh = locale === 'zh'
 
-  // 价格区间
+  // 价格区间（新需求：¥0-300/300-600/600-1000/1000+）
   const priceRanges = [
-    { label: isZh ? '¥0-500' : '¥0-500', min: 0, max: 500, color: 'bg-green-500', hoverColor: 'hover:bg-green-600', textColor: 'text-green-600' },
-    { label: isZh ? '¥500-1000' : '¥500-1000', min: 500, max: 1000, color: 'bg-blue-500', hoverColor: 'hover:bg-blue-600', textColor: 'text-blue-600' },
-    { label: isZh ? '¥1000-2000' : '¥1000-2000', min: 1000, max: 2000, color: 'bg-indigo-500', hoverColor: 'hover:bg-indigo-600', textColor: 'text-indigo-600' },
-    { label: isZh ? '¥2000+' : '¥2000+', min: 2000, max: Infinity, color: 'bg-purple-500', hoverColor: 'hover:bg-purple-600', textColor: 'text-purple-600' },
+    { label: isZh ? '¥0-300' : '¥0-300', min: 0, max: 300, color: 'bg-green-500', textColor: 'text-green-600', gradient: 'from-green-400 to-green-600' },
+    { label: isZh ? '¥300-600' : '¥300-600', min: 300, max: 600, color: 'bg-blue-500', textColor: 'text-blue-600', gradient: 'from-blue-400 to-blue-600' },
+    { label: isZh ? '¥600-1000' : '¥600-1000', min: 600, max: 1000, color: 'bg-orange-500', textColor: 'text-orange-600', gradient: 'from-orange-400 to-orange-600' },
+    { label: isZh ? '¥1000+' : '¥1000+', min: 1000, max: Infinity, color: 'bg-red-500', textColor: 'text-red-600', gradient: 'from-red-400 to-red-600' },
   ]
 
-  // 评分筛选选项
+  // 评分筛选选项（新需求：4.5+/4.0+/3.5+/全部）
   const ratingOptions = [
+    { label: isZh ? '全部' : 'All', value: null },
     { label: '4.5+', value: 4.5 },
     { label: '4.0+', value: 4.0 },
     { label: '3.5+', value: 3.5 },
   ]
 
-  // 位置选项
+  // 位置选项（新需求：西湖/钱江新城/滨江/武林/其他）
   const locations = [
     { value: '西湖', labelZh: '西湖', labelEn: 'West Lake' },
     { value: '钱江新城', labelZh: '钱江新城', labelEn: 'Qianjiang CBD' },
@@ -76,6 +98,9 @@ export default function HotelsPage() {
     function handleClickOutside(event: MouseEvent) {
       if (locationDropdownRef.current && !locationDropdownRef.current.contains(event.target as Node)) {
         setShowLocationDropdown(false)
+      }
+      if (typeDropdownRef.current && !typeDropdownRef.current.contains(event.target as Node)) {
+        setShowTypeDropdown(false)
       }
     }
     document.addEventListener('mousedown', handleClickOutside)
@@ -110,6 +135,14 @@ export default function HotelsPage() {
       if (selectedRating && hotel.rating < selectedRating) {
         return false
       }
+
+      // 酒店类型筛选
+      if (selectedHotelType) {
+        const hotelType = getHotelTypeByPrice(hotel.price)
+        if (hotelType !== selectedHotelType) {
+          return false
+        }
+      }
       
       return true
     })
@@ -135,7 +168,7 @@ export default function HotelsPage() {
     }
 
     return result
-  }, [selectedPriceRange, selectedLocation, selectedRating, sortBy, isZh])
+  }, [selectedPriceRange, selectedLocation, selectedRating, selectedHotelType, sortBy, isZh])
 
   const nextImage = (hotelId: string, totalImages: number) => {
     setCurrentImageIndex((prev) => ({
@@ -151,20 +184,33 @@ export default function HotelsPage() {
     }))
   }
 
-  // 获取价格标签颜色和样式
+  // 获取价格标签颜色和样式（新需求：绿/蓝/橙/红）
   const getPriceTagStyle = (price: number) => {
-    if (price < 500) return { bg: 'bg-green-500', shadow: 'shadow-green-200', ring: 'ring-green-100', gradient: 'from-green-400 to-green-600' }
-    if (price < 1000) return { bg: 'bg-blue-500', shadow: 'shadow-blue-200', ring: 'ring-blue-100', gradient: 'from-blue-400 to-blue-600' }
-    if (price < 2000) return { bg: 'bg-indigo-500', shadow: 'shadow-indigo-200', ring: 'ring-indigo-100', gradient: 'from-indigo-400 to-indigo-600' }
-    return { bg: 'bg-purple-500', shadow: 'shadow-purple-200', ring: 'ring-purple-100', gradient: 'from-purple-400 to-purple-600' }
+    if (price < 300) return { bg: 'bg-green-500', shadow: 'shadow-green-200', ring: 'ring-green-100', gradient: 'from-green-400 to-green-600' }
+    if (price < 600) return { bg: 'bg-blue-500', shadow: 'shadow-blue-200', ring: 'ring-blue-100', gradient: 'from-blue-400 to-blue-600' }
+    if (price < 1000) return { bg: 'bg-orange-500', shadow: 'shadow-orange-200', ring: 'ring-orange-100', gradient: 'from-orange-400 to-orange-600' }
+    return { bg: 'bg-red-500', shadow: 'shadow-red-200', ring: 'ring-red-100', gradient: 'from-red-400 to-red-600' }
   }
 
-  const hasActiveFilters = selectedPriceRange || selectedLocation || selectedRating
+  const hasActiveFilters = selectedPriceRange || selectedLocation || selectedRating || selectedHotelType
 
   // 获取当前选中的位置标签
   const selectedLocationLabel = selectedLocation 
     ? (isZh ? locations.find(l => l.value === selectedLocation)?.labelZh : locations.find(l => l.value === selectedLocation)?.labelEn)
     : (isZh ? '选择位置' : 'Select Location')
+
+  // 获取当前选中的类型标签
+  const selectedTypeLabel = selectedHotelType
+    ? (isZh ? hotelTypes.find(t => t.key === selectedHotelType)?.labelZh : hotelTypes.find(t => t.key === selectedHotelType)?.labelEn)
+    : (isZh ? '酒店类型' : 'Hotel Type')
+
+  // 清除所有筛选
+  const clearAllFilters = () => {
+    setSelectedPriceRange(null)
+    setSelectedLocation('')
+    setSelectedRating(null)
+    setSelectedHotelType(null)
+  }
 
   return (
     <div className="min-h-screen bg-slate-50">
@@ -213,6 +259,33 @@ export default function HotelsPage() {
               </div>
             </div>
 
+            {/* 位置筛选 */}
+            <div className="flex flex-wrap items-center gap-3">
+              <span className="text-sm font-medium text-slate-700 flex items-center gap-2 min-w-fit">
+                <MapPin className="w-4 h-4" />
+                {isZh ? '位置' : 'Location'}
+              </span>
+              <div className="flex flex-wrap gap-2">
+                {locations.map((loc) => (
+                  <button
+                    key={loc.value}
+                    onClick={() =>
+                      setSelectedLocation(
+                        selectedLocation === loc.value ? '' : loc.value
+                      )
+                    }
+                    className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+                      selectedLocation === loc.value
+                        ? 'bg-primary-500 text-white shadow-lg shadow-primary-200 scale-105 ring-2 ring-primary-100 ring-offset-2'
+                        : 'bg-slate-100 text-slate-600 hover:bg-slate-200 hover:shadow-md'
+                    }`}
+                  >
+                    {isZh ? loc.labelZh : loc.labelEn}
+                  </button>
+                ))}
+              </div>
+            </div>
+
             {/* 评分筛选 */}
             <div className="flex flex-wrap items-center gap-3">
               <span className="text-sm font-medium text-slate-700 flex items-center gap-2 min-w-fit">
@@ -222,7 +295,7 @@ export default function HotelsPage() {
               <div className="flex flex-wrap gap-2">
                 {ratingOptions.map((option) => (
                   <button
-                    key={option.value}
+                    key={option.label}
                     onClick={() =>
                       setSelectedRating(
                         selectedRating === option.value ? null : option.value
@@ -234,72 +307,44 @@ export default function HotelsPage() {
                         : 'bg-slate-100 text-slate-600 hover:bg-slate-200 hover:shadow-md'
                     }`}
                   >
-                    <Star className="w-3.5 h-3.5 fill-current" />
+                    {option.value && <Star className="w-3.5 h-3.5 fill-current" />}
                     {option.label}
                   </button>
                 ))}
               </div>
             </div>
 
-            {/* 位置筛选 */}
+            {/* 酒店类型筛选 */}
             <div className="flex flex-wrap items-center gap-3">
               <span className="text-sm font-medium text-slate-700 flex items-center gap-2 min-w-fit">
-                <MapPin className="w-4 h-4" />
-                {isZh ? '位置' : 'Location'}
+                <Building2 className="w-4 h-4" />
+                {isZh ? '类型' : 'Type'}
               </span>
-              <div className="relative" ref={locationDropdownRef}>
-                <button
-                  onClick={() => setShowLocationDropdown(!showLocationDropdown)}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
-                    selectedLocation
-                      ? 'bg-primary-500 text-white shadow-lg shadow-primary-200 ring-2 ring-primary-100 ring-offset-2'
-                      : 'bg-slate-100 text-slate-600 hover:bg-slate-200 hover:shadow-md'
-                  }`}
-                >
-                  <span>{selectedLocationLabel}</span>
-                  <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${showLocationDropdown ? 'rotate-180' : ''}`} />
-                </button>
-                
-                {showLocationDropdown && (
-                  <div className="absolute top-full left-0 mt-2 w-48 bg-white rounded-xl shadow-xl border border-slate-100 z-20 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
-                    <button
-                      onClick={() => {
-                        setSelectedLocation('')
-                        setShowLocationDropdown(false)
-                      }}
-                      className={`w-full text-left px-4 py-3 text-sm transition-colors ${
-                        selectedLocation === '' ? 'bg-primary-50 text-primary-600 font-medium' : 'text-slate-700 hover:bg-slate-50'
-                      }`}
-                    >
-                      {isZh ? '全部位置' : 'All Locations'}
-                    </button>
-                    {locations.map((loc) => (
-                      <button
-                        key={loc.value}
-                        onClick={() => {
-                          setSelectedLocation(loc.value)
-                          setShowLocationDropdown(false)
-                        }}
-                        className={`w-full text-left px-4 py-3 text-sm transition-colors ${
-                          selectedLocation === loc.value ? 'bg-primary-50 text-primary-600 font-medium' : 'text-slate-700 hover:bg-slate-50'
-                        }`}
-                      >
-                        {isZh ? loc.labelZh : loc.labelEn}
-                      </button>
-                    ))}
-                  </div>
-                )}
+              <div className="flex flex-wrap gap-2">
+                {hotelTypes.map((type) => (
+                  <button
+                    key={type.key}
+                    onClick={() =>
+                      setSelectedHotelType(
+                        selectedHotelType === type.key ? null : type.key
+                      )
+                    }
+                    className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+                      selectedHotelType === type.key
+                        ? `${type.color} text-white shadow-lg scale-105 ring-2 ring-offset-2 ${type.color.replace('bg-', 'ring-')}-200`
+                        : 'bg-slate-100 text-slate-600 hover:bg-slate-200 hover:shadow-md'
+                    }`}
+                  >
+                    {isZh ? type.labelZh : type.labelEn}
+                  </button>
+                ))}
               </div>
               
               {/* 清除筛选按钮 */}
               {hasActiveFilters && (
                 <button
-                  onClick={() => {
-                    setSelectedPriceRange(null)
-                    setSelectedLocation('')
-                    setSelectedRating(null)
-                  }}
-                  className="flex items-center gap-1.5 px-4 py-2 text-sm text-primary-600 hover:text-primary-700 font-medium hover:bg-primary-50 rounded-full transition-all"
+                  onClick={clearAllFilters}
+                  className="flex items-center gap-1.5 px-4 py-2 text-sm text-primary-600 hover:text-primary-700 font-medium hover:bg-primary-50 rounded-full transition-all ml-auto"
                 >
                   <X className="w-3.5 h-3.5" />
                   {isZh ? '清除全部' : 'Clear All'}
@@ -309,11 +354,19 @@ export default function HotelsPage() {
           </div>
         </div>
 
-        {/* Sort Bar */}
+        {/* Sort Bar + 搜索结果计数 */}
         <div className="flex items-center justify-between bg-white rounded-xl p-4 shadow-sm mb-6 border border-slate-100">
-          <span className="text-slate-600 font-medium">
-            {filteredHotels.length} {isZh ? '家酒店' : 'hotels found'}
-          </span>
+          <div className="flex items-center gap-3">
+            <span className="text-2xl font-bold text-slate-900">{filteredHotels.length}</span>
+            <span className="text-slate-600 font-medium">
+              {isZh ? '家酒店符合条件' : 'hotels found'}
+            </span>
+            {hasActiveFilters && (
+              <span className="text-xs text-slate-400 bg-slate-100 px-2 py-1 rounded-full">
+                {isZh ? '已启用筛选' : 'Filters active'}
+              </span>
+            )}
+          </div>
           <div className="flex items-center gap-2">
             <SortAsc className="w-4 h-4 text-slate-400" />
             <select 
@@ -329,18 +382,19 @@ export default function HotelsPage() {
           </div>
         </div>
 
-        {/* Hotel Cards Grid */}
+        {/* Hotel Cards Grid - 响应式布局：手机1列/平板2列/桌面3列 */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredHotels.map((hotel, index) => {
             const currentIdx = currentImageIndex[hotel.id] || 0
             const currentImage = hotel.images[currentIdx]
             const priceStyle = getPriceTagStyle(hotel.price)
+            const hotelType = hotelTypes.find(t => t.key === getHotelTypeByPrice(hotel.price))
 
             return (
               <Link 
                 key={hotel.id} 
                 href={`/hotels/${hotel.slug}`}
-                className="group block bg-white rounded-2xl shadow-sm hover:shadow-2xl hover:scale-[1.02] hover:-translate-y-2 transition-all duration-500 overflow-hidden cursor-pointer border border-slate-100"
+                className="group block bg-white rounded-2xl shadow-sm hover:shadow-xl hover:scale-105 transition-all duration-300 overflow-hidden cursor-pointer border border-slate-100"
                 style={{ animationDelay: `${index * 50}ms` }}
               >
                 {/* Image Gallery */}
@@ -355,15 +409,22 @@ export default function HotelsPage() {
                   {/* 渐变遮罩 - 悬浮时显示 */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-                  {/* 醒目的价格标签 */}
+                  {/* 醒目的价格标签（绿/蓝/橙/红） */}
                   <div className={`absolute top-3 right-3 bg-gradient-to-r ${priceStyle.gradient} text-white px-3 py-1.5 rounded-full shadow-lg ${priceStyle.shadow} z-10 transform group-hover:scale-110 transition-transform duration-300`}>
                     <span className="text-sm font-bold">¥{hotel.price}</span>
                     <span className="text-xs opacity-90">{isZh ? '/晚' : '/nt'}</span>
                   </div>
 
+                  {/* 酒店类型标签 */}
+                  {hotelType && (
+                    <div className={`absolute top-3 left-3 ${hotelType.color} text-white px-2 py-1 rounded-full text-xs font-medium shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300`}>
+                      {isZh ? hotelType.labelZh : hotelType.labelEn}
+                    </div>
+                  )}
+
                   {/* 精选标签 */}
                   {hotel.featured && (
-                    <div className="absolute top-3 left-3 transform group-hover:scale-105 transition-transform duration-300">
+                    <div className="absolute bottom-3 left-3 transform group-hover:scale-105 transition-transform duration-300">
                       <span className="px-3 py-1.5 bg-gradient-to-r from-amber-400 to-orange-500 text-white text-xs font-bold rounded-full shadow-lg shadow-amber-200">
                         {isZh ? '⭐ 精选' : '⭐ Featured'}
                       </span>
@@ -501,11 +562,7 @@ export default function HotelsPage() {
               {isZh ? '没有找到符合条件的酒店' : 'No hotels found matching your criteria'}
             </p>
             <button
-              onClick={() => {
-                setSelectedPriceRange(null)
-                setSelectedLocation('')
-                setSelectedRating(null)
-              }}
+              onClick={clearAllFilters}
               className="px-6 py-2.5 bg-primary-500 text-white rounded-lg hover:bg-primary-600 transition-colors font-medium shadow-md hover:shadow-lg"
             >
               {isZh ? '清除筛选条件' : 'Clear All Filters'}
