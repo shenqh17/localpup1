@@ -1572,16 +1572,6 @@ export const midHotelsExtra: Hotel[] = [
   },
 ]
 
-// 合并所有酒店数据
-export const allHotels: Hotel[] = [
-  ...hotels,
-  ...luxuryHotelsExtra,
-  ...highHotels,
-  ...highHotelsExtra,
-  ...midHotels,
-  ...midHotelsExtra,
-]
-
 // 补充：61-80号经济型酒店 ¥200-400
 export const budgetHotelsExtra: Hotel[] = [
   {
