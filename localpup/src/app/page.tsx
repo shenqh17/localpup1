@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import Script from 'next/script'
-import { Hero } from '@/components/Hero'
+import { Hero, RegionCards } from '@/components/Hero'
 import { FeaturedHotels } from '@/components/FeaturedHotels'
 import { Features } from '@/components/Features'
 import { CityGuide } from '@/components/CityGuide'
@@ -180,6 +180,7 @@ export default function Home() {
       
       {/* 页面内容 */}
       <Hero />
+      <RegionCards />
       <Features />
       <FeaturedHotels />
       <PriceFilter />

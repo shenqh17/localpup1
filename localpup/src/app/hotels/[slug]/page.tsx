@@ -161,7 +161,60 @@ export default function HotelDetailPage() {
       .slice(0, 3)
   }, [hotel])
   
-  // 构建平台评分数据（模拟更多平台数据）
+  // 使用联盟链接配置
+  const affiliateConfig = {
+    affiliateId: 'localpup',
+    source: 'localpup_website',
+    campaign: 'localpup_hangzhou_hotels',
+  }
+  
+  // 构建 Booking 联盟链接
+  const buildBookingUrl = (slug: string) => {
+    const params = new URLSearchParams({
+      aid: affiliateConfig.affiliateId,
+      dest_id: '-3339992',
+      dest_type: 'city',
+      group_adults: '2',
+      group_children: '0',
+      no_rooms: '1',
+      source: affiliateConfig.source,
+      utm_campaign: affiliateConfig.campaign,
+      utm_medium: 'referral',
+    })
+    return `https://www.booking.com/hotel/cn/${slug}.html?${params.toString()}`
+  }
+  
+  // 构建携程联盟链接
+  const buildCtripUrl = (hotelId: string) => {
+    const params = new URLSearchParams({
+      AllianceID: 'localpup',
+      from: 'localpup',
+      sid: hotelId,
+    })
+    return `https://hotels.ctrip.com/hotels/${hotelId}.html?${params.toString()}`
+  }
+  
+  // 构建 Agoda 联盟链接
+  const buildAgodaUrl = (slug: string) => {
+    const params = new URLSearchParams({
+      cid: 'localpup001',
+      currency: 'CNY',
+      device: 'desktop',
+    })
+    return `https://www.agoda.com/${slug}/hotel/hangzhou-cn.html?${params.toString()}`
+  }
+  
+  // 构建 Hotels.com 联盟链接
+  const buildHotelsComUrl = (hotelId: string, slug: string) => {
+    return `https://www.hotels.com/ho${hotelId}/${slug}.html?IMS=${affiliateConfig.source}`
+  }
+  
+  // 构建飞猪联盟链接
+  const buildFliggyUrl = (hotelId: string) => {
+    return `https://www.fliggy.com/hotel/${hotelId}.html?from=localpup_referral`
+  }
+  
+  // 构建平台评分数据（使用联盟链接）
   const platformRatings: PlatformRating[] = [
     {
       name: 'Booking.com',
@@ -171,7 +224,7 @@ export default function HotelDetailPage() {
       color: 'bg-blue-600',
       bgColor: 'bg-blue-50',
       textColor: 'text-blue-700',
-      url: `https://www.booking.com/hotel/cn/${hotel.slug}.html`
+      url: buildBookingUrl(hotel.slug)
     },
     {
       name: 'Ctrip',
@@ -181,7 +234,7 @@ export default function HotelDetailPage() {
       color: 'bg-sky-500',
       bgColor: 'bg-sky-50',
       textColor: 'text-sky-700',
-      url: `https://hotels.ctrip.com/hotels/${hotel.id}.html`
+      url: buildCtripUrl(hotel.id)
     },
     {
       name: 'Agoda',
@@ -191,7 +244,7 @@ export default function HotelDetailPage() {
       color: 'bg-purple-600',
       bgColor: 'bg-purple-50',
       textColor: 'text-purple-700',
-      url: `https://www.agoda.com/${hotel.slug}/hotel/hangzhou-cn.html`
+      url: buildAgodaUrl(hotel.slug)
     },
     {
       name: 'Hotels.com',
@@ -201,7 +254,7 @@ export default function HotelDetailPage() {
       color: 'bg-red-500',
       bgColor: 'bg-red-50',
       textColor: 'text-red-700',
-      url: `https://www.hotels.com/ho${hotel.id}/${hotel.slug}`
+      url: buildHotelsComUrl(hotel.id, hotel.slug)
     },
     {
       name: 'Fliggy',
@@ -211,7 +264,7 @@ export default function HotelDetailPage() {
       color: 'bg-orange-500',
       bgColor: 'bg-orange-50',
       textColor: 'text-orange-700',
-      url: `https://www.fliggy.com/hotel/${hotel.id}`
+      url: buildFliggyUrl(hotel.id)
     }
   ]
   
@@ -546,7 +599,7 @@ export default function HotelDetailPage() {
               {/* 快速预订按钮 */}
               <div className="space-y-3">
                 <a
-                  href={`https://www.booking.com/hotel/cn/${hotel.slug}.html`}
+                  href={buildBookingUrl(hotel.slug)}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center justify-center gap-2 w-full py-3.5 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-700 transition-colors shadow-md hover:shadow-lg"
@@ -556,7 +609,7 @@ export default function HotelDetailPage() {
                 </a>
                 
                 <a
-                  href={`https://hotels.ctrip.com/hotels/${hotel.id}.html`}
+                  href={buildCtripUrl(hotel.id)}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center justify-center gap-2 w-full py-3.5 bg-sky-500 text-white font-semibold rounded-xl hover:bg-sky-600 transition-colors shadow-md hover:shadow-lg"
@@ -566,7 +619,7 @@ export default function HotelDetailPage() {
                 </a>
                 
                 <a
-                  href={`https://www.agoda.com/${hotel.slug}/hotel/hangzhou-cn.html`}
+                  href={buildAgodaUrl(hotel.slug)}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center justify-center gap-2 w-full py-3.5 bg-purple-600 text-white font-semibold rounded-xl hover:bg-purple-700 transition-colors shadow-md hover:shadow-lg"
