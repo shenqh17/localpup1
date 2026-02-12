@@ -7,7 +7,7 @@ import { Star, MapPin, Filter, ChevronLeft, ChevronRight, ChevronDown, X, SortAs
 import { hotels } from '@/data/hotels100'
 import { useI18n } from '@/lib/i18n-context'
 import { getSortedHotels, calculateOverallRating } from '@/data/hotel-utils'
-import CompactRatingBubbles from '@/components/CompactRatingBubbles'
+import OvalRatingBubbles from '@/components/OvalRatingBubbles'
 
 // 星级评分组件
 function StarRating({ rating, size = 'sm' }: { rating: number; size?: 'xs' | 'sm' | 'md' | 'lg' }) {
@@ -517,7 +517,7 @@ export default function HotelsPage() {
 
                   {/* 平台评分 - 使用新组件 */}
                   <div className="mb-4">
-                    <CompactRatingBubbles hotel={hotel} showPup={true} />
+                    <OvalRatingBubbles hotel={hotel} showPup={true} />
                   </div>
 
                   {/* 设施标签 */}
