@@ -7,16 +7,16 @@ interface HotelRatingDisplayProps {
   hotel: {
     bookingRating: number
     bookingReviewCount: number
-    agodaRating: number
-    agodaReviewCount: number
-    hotelscomRating: number
-    hotelscomReviewCount: number
     ctripRating: number
     ctripReviewCount: number
-    fliggyRating: number
-    fliggyReviewCount: number
     rating: number
     reviewCount: number
+    agodaRating?: number
+    agodaReviewCount?: number
+    hotelscomRating?: number
+    hotelscomReviewCount?: number
+    fliggyRating?: number
+    fliggyReviewCount?: number
   }
   compact?: boolean
 }
@@ -33,25 +33,28 @@ export default function HotelRatingDisplay({ hotel, compact = false }: HotelRati
       reviewCount: hotel.bookingReviewCount,
       color: 'bg-blue-500',
       icon: '🌐',
-      isGlobal: true
+      isGlobal: true,
+      available: true
     },
     {
       name: 'Agoda',
       nameZh: 'Agoda',
-      rating: hotel.agodaRating,
-      reviewCount: hotel.agodaReviewCount,
+      rating: hotel.agodaRating || 0,
+      reviewCount: hotel.agodaReviewCount || 0,
       color: 'bg-red-500',
       icon: '🏨',
-      isGlobal: true
+      isGlobal: true,
+      available: !!hotel.agodaRating
     },
     {
       name: 'Hotels.com',
       nameZh: 'Hotels.com',
-      rating: hotel.hotelscomRating,
-      reviewCount: hotel.hotelscomReviewCount,
+      rating: hotel.hotelscomRating || 0,
+      reviewCount: hotel.hotelscomReviewCount || 0,
       color: 'bg-green-500',
       icon: '🏠',
-      isGlobal: true
+      isGlobal: true,
+      available: !!hotel.hotelscomRating
     }
   ]
   
@@ -64,16 +67,18 @@ export default function HotelRatingDisplay({ hotel, compact = false }: HotelRati
       reviewCount: hotel.ctripReviewCount,
       color: 'bg-orange-500',
       icon: '✈️',
-      isGlobal: false
+      isGlobal: false,
+      available: true
     },
     {
       name: 'Fliggy',
       nameZh: '飞猪',
-      rating: hotel.fliggyRating,
-      reviewCount: hotel.fliggyReviewCount,
+      rating: hotel.fliggyRating || 0,
+      reviewCount: hotel.fliggyReviewCount || 0,
       color: 'bg-purple-500',
       icon: '🐷',
-      isGlobal: false
+      isGlobal: false,
+      available: !!hotel.fliggyRating
     }
   ]
   
@@ -81,16 +86,20 @@ export default function HotelRatingDisplay({ hotel, compact = false }: HotelRati
   const calculateOverallRating = () => {
     const ratings = [
       hotel.bookingRating,
-      hotel.agodaRating,
-      hotel.hotelscomRating,
+      hotel.agodaRating || 0,
+      hotel.hotelscomRating || 0,
       hotel.ctripRating * 2, // 国内平台权重加倍
-      hotel.fliggyRating * 2
+      (hotel.fliggyRating || 0) * 2
     ]
     const total = ratings.reduce((sum, rating) => sum + rating, 0)
     return (total / (ratings.length + 2)).toFixed(1) // 国内平台权重已加倍
   }
   
   const overallRating = calculateOverallRating()
+  
+  // 过滤可用的平台
+  const availableGlobalPlatforms = globalPlatforms.filter(p => p.available)
+  const availableDomesticPlatforms = domesticPlatforms.filter(p => p.available)
   
   // 星级显示组件
   const StarRating = ({ rating, size = 'sm' }: { rating: number; size?: 'xs' | 'sm' | 'md' | 'lg' }) => {
@@ -171,7 +180,7 @@ export default function HotelRatingDisplay({ hotel, compact = false }: HotelRati
                 {t('hotels.globalPlatforms')}
               </div>
               <div className="text-sm font-semibold text-slate-900">
-                {globalPlatforms.map(p => p.rating.toFixed(1)).join(' / ')}
+                {availableGlobalPlatforms.map(p => p.rating.toFixed(1)).join(' / ')}
               </div>
             </div>
             
@@ -182,7 +191,7 @@ export default function HotelRatingDisplay({ hotel, compact = false }: HotelRati
                 {t('hotels.domesticPlatforms')}
               </div>
               <div className="text-sm font-semibold text-slate-900">
-                {domesticPlatforms.map(p => p.rating.toFixed(1)).join(' / ')}
+                {availableDomesticPlatforms.map(p => p.rating.toFixed(1)).join(' / ')}
               </div>
             </div>
           </div>
@@ -219,7 +228,7 @@ export default function HotelRatingDisplay({ hotel, compact = false }: HotelRati
           <h3 className="text-lg font-semibold text-slate-900">{t('hotels.globalPlatformRatings')}</h3>
         </div>
         <div className="space-y-3">
-          {globalPlatforms.map((platform) => (
+          {availableGlobalPlatforms.map((platform) => (
             <PlatformRatingItem key={platform.name} platform={platform} isGlobal />
           ))}
         </div>
@@ -232,7 +241,7 @@ export default function HotelRatingDisplay({ hotel, compact = false }: HotelRati
           <h3 className="text-lg font-semibold text-slate-900">{t('hotels.domesticPlatformRatings')}</h3>
         </div>
         <div className="space-y-3">
-          {domesticPlatforms.map((platform) => (
+          {availableDomesticPlatforms.map((platform) => (
             <PlatformRatingItem key={platform.name} platform={platform} />
           ))}
         </div>

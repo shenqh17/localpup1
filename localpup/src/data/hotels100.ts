@@ -10,9 +10,15 @@ export interface Hotel {
   rating: number
   bookingRating: number
   ctripRating: number
+  agodaRating?: number
+  hotelscomRating?: number
+  fliggyRating?: number
   reviewCount: number
   bookingReviewCount: number
   ctripReviewCount: number
+  agodaReviewCount?: number
+  hotelscomReviewCount?: number
+  fliggyReviewCount?: number
   price: number
   location: string
   locationZh?: string
