@@ -78,21 +78,22 @@ export default function HotelsPage() {
     { label: isZh ? '¥1000+' : '¥1000+', min: 1000, max: Infinity, color: 'bg-red-500', textColor: 'text-red-600', gradient: 'from-red-400 to-red-600' },
   ]
 
-  // 评分筛选选项（新需求：4.5+/4.0+/3.5+/全部）
+  // 评分筛选选项（10分制：9.0+/8.0+/7.0+）
   const ratingOptions = [
     { label: isZh ? '全部' : 'All', value: null },
-    { label: '4.5+', value: 4.5 },
-    { label: '4.0+', value: 4.0 },
-    { label: '3.5+', value: 3.5 },
+    { label: '9.0+', value: 9.0 },
+    { label: '8.0+', value: 8.0 },
+    { label: '7.0+', value: 7.0 },
   ]
 
-  // 位置选项（新需求：西湖/钱江新城/滨江/武林/其他）
+  // 位置选项（匹配数据中的实际位置）
   const locations = [
-    { value: '西湖', labelZh: '西湖', labelEn: 'West Lake' },
-    { value: '钱江新城', labelZh: '钱江新城', labelEn: 'Qianjiang CBD' },
-    { value: '滨江', labelZh: '滨江', labelEn: 'Binjiang' },
-    { value: '武林', labelZh: '武林', labelEn: 'Wulin' },
-    { value: '其他', labelZh: '其他', labelEn: 'Others' },
+    { value: 'westlake', labelZh: '西湖', labelEn: 'West Lake', keywords: ['西湖', 'West Lake', 'Xihu'] },
+    { value: 'qianjiang', labelZh: '钱江新城', labelEn: 'Qianjiang CBD', keywords: ['钱江', 'Qianjiang', 'CBD', '江干'] },
+    { value: 'binjiang', labelZh: '滨江', labelEn: 'Binjiang', keywords: ['滨江', 'Binjiang', '滨江区'] },
+    { value: 'wulin', labelZh: '武林', labelEn: 'Wulin', keywords: ['武林', 'Wulin', '下城'] },
+    { value: 'lingyin', labelZh: '灵隐寺', labelEn: 'Lingyin Temple', keywords: ['灵隐', 'Lingyin', '飞来峰'] },
+    { value: 'other', labelZh: '其他', labelEn: 'Others', keywords: [] },
   ]
 
   // 点击外部关闭下拉菜单
@@ -123,14 +124,23 @@ export default function HotelsPage() {
       
       // 位置筛选
       if (selectedLocation) {
-        const hotelLocation = isZh ? hotel.locationZh : hotel.location
-        if (selectedLocation === '其他') {
-          const knownLocations = ['西湖', '钱江新城', '滨江', '武林', 'West Lake', 'Qianjiang', 'Binjiang', 'Wulin']
-          if (knownLocations.some((loc) => hotelLocation?.includes(loc))) {
-            return false
+        const locConfig = locations.find(l => l.value === selectedLocation)
+        if (locConfig) {
+          const hotelLocationText = `${hotel.location} ${hotel.locationZh || ''}`.toLowerCase()
+          const keywordMatch = locConfig.keywords.some(keyword =>
+            hotelLocationText.includes(keyword.toLowerCase())
+          )
+          if (selectedLocation === 'other') {
+            // "其他"：排除已知位置
+            const knownKeywords = locations.filter(l => l.value !== 'other').flatMap(l => l.keywords)
+            const isKnown = knownKeywords.some(keyword =>
+              hotelLocationText.includes(keyword.toLowerCase())
+            )
+            if (isKnown) return false
+          } else {
+            // 正常筛选：匹配关键词
+            if (!keywordMatch) return false
           }
-        } else if (!hotelLocation?.includes(selectedLocation)) {
-          return false
         }
       }
       
@@ -198,7 +208,7 @@ export default function HotelsPage() {
   const hasActiveFilters = selectedPriceRange || selectedLocation || selectedRating || selectedHotelType
 
   // 获取当前选中的位置标签
-  const selectedLocationLabel = selectedLocation 
+  const selectedLocationLabel = selectedLocation
     ? (isZh ? locations.find(l => l.value === selectedLocation)?.labelZh : locations.find(l => l.value === selectedLocation)?.labelEn)
     : (isZh ? '选择位置' : 'Select Location')
 
@@ -221,12 +231,12 @@ export default function HotelsPage() {
       <div className="bg-white border-b border-slate-200">
         <div className="section-padding py-8 max-w-7xl mx-auto">
           <h1 className="text-3xl font-bold text-slate-900 mb-2">
-            {isZh ? '杭州酒店' : 'Hotels in Hangzhou'}
+            {t('common.hotelsInHangzhou')}
           </h1>
           <p className="text-slate-600">
             {isZh
-              ? `发现 ${filteredHotels.length} 家精选高分酒店，Booking 评分 9.0+，携程评分 4.0+`
-              : `Discover ${filteredHotels.length} handpicked hotels with Booking 9.0+ and Ctrip 4.0+ ratings`}
+              ? `发现 ${filteredHotels.length} ${t('common.discoverHotels')}`
+              : `${filteredHotels.length} ${t('common.discoverHotels')}`}
           </p>
         </div>
       </div>
@@ -239,7 +249,7 @@ export default function HotelsPage() {
             <div className="flex flex-wrap items-center gap-3">
               <span className="text-sm font-medium text-slate-700 flex items-center gap-2 min-w-fit">
                 <Filter className="w-4 h-4" />
-                {isZh ? '价格' : 'Price'}
+                {t('hotels.filter.price')}
               </span>
               <div className="flex flex-wrap gap-2">
                 {priceRanges.map((range) => (
@@ -350,7 +360,7 @@ export default function HotelsPage() {
                   className="flex items-center gap-1.5 px-4 py-2 text-sm text-primary-600 hover:text-primary-700 font-medium hover:bg-primary-50 rounded-full transition-all ml-auto"
                 >
                   <X className="w-3.5 h-3.5" />
-                  {isZh ? '清除全部' : 'Clear All'}
+                  {t('common.clearAll')}
                 </button>
               )}
             </div>
@@ -362,11 +372,11 @@ export default function HotelsPage() {
           <div className="flex items-center gap-3">
             <span className="text-2xl font-bold text-slate-900">{filteredHotels.length}</span>
             <span className="text-slate-600 font-medium">
-              {isZh ? '家酒店符合条件' : 'hotels found'}
+              {t('common.hotelsFound')}
             </span>
             {hasActiveFilters && (
               <span className="text-xs text-slate-400 bg-slate-100 px-2 py-1 rounded-full">
-                {isZh ? '已启用筛选' : 'Filters active'}
+                {t('common.filtersActive')}
               </span>
             )}
           </div>
@@ -377,10 +387,10 @@ export default function HotelsPage() {
               onChange={(e) => setSortBy(e.target.value as typeof sortBy)}
               className="text-sm border-none bg-slate-100 text-slate-700 font-medium focus:outline-none focus:ring-2 focus:ring-primary-500 rounded-lg px-3 py-2 cursor-pointer"
             >
-              <option value="recommended">{isZh ? '推荐排序' : 'Recommended'}</option>
-              <option value="price-asc">{isZh ? '价格：低到高' : 'Price: Low to High'}</option>
-              <option value="price-desc">{isZh ? '价格：高到低' : 'Price: High to Low'}</option>
-              <option value="rating-desc">{isZh ? '评分：高到低' : 'Rating: High to Low'}</option>
+              <option value="recommended">{t('hotels.filter.recommended')}</option>
+              <option value="price-asc">{t('hotels.filter.priceLowHigh')}</option>
+              <option value="price-desc">{t('hotels.filter.priceHighLow')}</option>
+              <option value="rating-desc">{t('hotels.filter.ratingHighLow')}</option>
             </select>
           </div>
         </div>
@@ -415,7 +425,7 @@ export default function HotelsPage() {
                   {/* 醒目的价格标签（绿/蓝/橙/红） */}
                   <div className={`absolute top-3 right-3 bg-gradient-to-r ${priceStyle.gradient} text-white px-3 py-1.5 rounded-full shadow-lg ${priceStyle.shadow} z-10 transform group-hover:scale-110 transition-transform duration-300`}>
                     <span className="text-sm font-bold">¥{hotel.price}</span>
-                    <span className="text-xs opacity-90">{isZh ? '/晚' : '/nt'}</span>
+                    <span className="text-xs opacity-90">{t('common.perNight')}</span>
                   </div>
 
                   {/* 酒店类型标签 */}
@@ -429,7 +439,7 @@ export default function HotelsPage() {
                   {hotel.featured && (
                     <div className="absolute bottom-3 left-3 transform group-hover:scale-105 transition-transform duration-300">
                       <span className="px-3 py-1.5 bg-gradient-to-r from-amber-400 to-orange-500 text-white text-xs font-bold rounded-full shadow-lg shadow-amber-200">
-                        {isZh ? '⭐ 精选' : '⭐ Featured'}
+                        ⭐ {t('common.featured')}
                       </span>
                     </div>
                   )}
@@ -485,7 +495,7 @@ export default function HotelsPage() {
                       </div>
                     </div>
                     <span className="text-xs text-slate-400">
-                      {hotel.reviewCount?.toLocaleString()} {isZh ? '评价' : 'reviews'}
+                      {hotel.reviewCount?.toLocaleString()} {t('common.reviews')}
                     </span>
                   </div>
 
@@ -531,7 +541,7 @@ export default function HotelsPage() {
                   <div className="flex items-center justify-between pt-3 border-t border-slate-100">
                     <div className="flex items-baseline gap-1">
                       <span className="text-2xl font-bold text-slate-900">¥{hotel.price}</span>
-                      <span className="text-xs text-slate-500">{t('hotels.perNight')}</span>
+                      <span className="text-xs text-slate-500">{t('common.perNight')}</span>
                     </div>
                     <span className="inline-flex items-center px-4 py-2 bg-primary-500 text-white text-sm font-semibold rounded-lg group-hover:bg-primary-600 transition-all duration-300 shadow-md group-hover:shadow-lg group-hover:shadow-primary-200 transform group-hover:translate-x-0.5">
                       {t('hotels.viewDetails')}
@@ -551,13 +561,13 @@ export default function HotelsPage() {
               <Filter className="w-8 h-8 text-slate-400" />
             </div>
             <p className="text-slate-500 text-lg mb-4">
-              {isZh ? '没有找到符合条件的酒店' : 'No hotels found matching your criteria'}
+              {t('common.noResults')}
             </p>
             <button
               onClick={clearAllFilters}
               className="px-6 py-2.5 bg-primary-500 text-white rounded-lg hover:bg-primary-600 transition-colors font-medium shadow-md hover:shadow-lg"
             >
-              {isZh ? '清除筛选条件' : 'Clear All Filters'}
+              {t('common.clearFilters')}
             </button>
           </div>
         )}

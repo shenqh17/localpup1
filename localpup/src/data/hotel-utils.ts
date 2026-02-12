@@ -1,44 +1,20 @@
 import { Hotel } from './hotels100'
 
-// 计算酒店综合评分（加权平均）
-export function calculateOverallRating(hotel: Hotel): number {
-  const weights = {
-    bookingRating: 1.2,    // Booking.com权重最高
-    agodaRating: 1.1,      // Agoda次之
-    hotelscomRating: 1.0,  // Hotels.com
-    ctripRating: 1.3,      // 携程权重较高（国内主要平台）
-    fliggyRating: 1.2      // 飞猪权重较高
-  }
-  
-  // 处理可选属性，如果不存在则使用0
-  const agodaRating = hotel.agodaRating || 0
-  const hotelscomRating = hotel.hotelscomRating || 0
-  const fliggyRating = hotel.fliggyRating || 0
-  
-  const weightedSum = 
-    hotel.bookingRating * weights.bookingRating +
-    agodaRating * weights.agodaRating +
-    hotelscomRating * weights.hotelscomRating +
-    hotel.ctripRating * weights.ctripRating +
-    fliggyRating * weights.fliggyRating
-  
-  const totalWeight = 
-    weights.bookingRating + 
-    weights.agodaRating + 
-    weights.hotelscomRating + 
-    weights.ctripRating + 
-    weights.fliggyRating
-  
-  return weightedSum / totalWeight
+// 5分制转10分制（使用智能转换，考虑平台评分特性）
+const convert5to10Point = (rating5: number): number => {
+  if (rating5 <= 0) return 0
+  return rating5 * 2
 }
 
-// 按综合评分从高到低排序
-export function sortHotelsByRating(hotels: Hotel[]): Hotel[] {
-  return [...hotels].sort((a, b) => {
-    const ratingA = calculateOverallRating(a)
-    const ratingB = calculateOverallRating(b)
-    return ratingB - ratingA // 降序排列
-  })
+// 获取各平台评分（统一10分制返回，供其他组件使用）
+export function getPlatformRatings(hotel: Hotel) {
+  return {
+    booking: hotel.bookingRating,  // 已经是10分制
+    agoda: hotel.agodaRating || 0,  // 10分制
+    airbnb: hotel.airbnbRating || 0,  // 10分制
+    ctrip: convert5to10Point(hotel.ctripRating),  // 5分制转10分制
+    fliggy: convert5to10Point(hotel.fliggyRating || 0)  // 5分制转10分制
+  }
 }
 
 // 按价格范围筛选
@@ -112,8 +88,9 @@ export function getRatingStatistics(hotels: Hotel[]) {
     booking: calculateStats(hotels.map(h => h.bookingRating)),
     agoda: calculateStats(hotels.map(h => h.agodaRating || 0)),
     hotelscom: calculateStats(hotels.map(h => h.hotelscomRating || 0)),
-    ctrip: calculateStats(hotels.map(h => h.ctripRating)),
-    fliggy: calculateStats(hotels.map(h => h.fliggyRating || 0))
+    // 携程和飞猪是5分制，转换为10分制统计
+    ctrip: calculateStats(hotels.map(h => convertTo10Point(h.ctripRating))),
+    fliggy: calculateStats(hotels.map(h => convertTo10Point(h.fliggyRating || 0)))
   }
 }
 
