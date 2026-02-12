@@ -17,6 +17,8 @@ interface HotelRatingDisplayProps {
     hotelscomReviewCount?: number
     fliggyRating?: number
     fliggyReviewCount?: number
+    airbnbRating?: number
+    airbnbReviewCount?: number
   }
   compact?: boolean
 }
@@ -24,37 +26,51 @@ interface HotelRatingDisplayProps {
 export default function HotelRatingDisplay({ hotel, compact = false }: HotelRatingDisplayProps) {
   const { t } = useI18n()
   
-  // 全球前三预订平台
+  // 全球预订平台（5个）
   const globalPlatforms = [
     {
       name: 'Booking.com',
       nameZh: 'Booking.com',
       rating: hotel.bookingRating,
       reviewCount: hotel.bookingReviewCount,
-      color: 'bg-blue-500',
+      color: 'bg-gradient-to-r from-blue-500 to-blue-600',
       icon: '🌐',
       isGlobal: true,
-      available: true
+      available: true,
+      weight: 1.2
     },
     {
       name: 'Agoda',
       nameZh: 'Agoda',
       rating: hotel.agodaRating || 0,
       reviewCount: hotel.agodaReviewCount || 0,
-      color: 'bg-red-500',
+      color: 'bg-gradient-to-r from-red-500 to-red-600',
       icon: '🏨',
       isGlobal: true,
-      available: !!hotel.agodaRating
+      available: !!hotel.agodaRating,
+      weight: 1.1
     },
     {
       name: 'Hotels.com',
       nameZh: 'Hotels.com',
       rating: hotel.hotelscomRating || 0,
       reviewCount: hotel.hotelscomReviewCount || 0,
-      color: 'bg-green-500',
+      color: 'bg-gradient-to-r from-green-500 to-green-600',
       icon: '🏠',
       isGlobal: true,
-      available: !!hotel.hotelscomRating
+      available: !!hotel.hotelscomRating,
+      weight: 1.0
+    },
+    {
+      name: 'Airbnb',
+      nameZh: 'Airbnb',
+      rating: hotel.airbnbRating || 0,
+      reviewCount: hotel.airbnbReviewCount || 0,
+      color: 'bg-gradient-to-r from-pink-500 to-pink-600',
+      icon: '🏡',
+      isGlobal: true,
+      available: !!hotel.airbnbRating,
+      weight: 1.1
     }
   ]
   
@@ -65,34 +81,39 @@ export default function HotelRatingDisplay({ hotel, compact = false }: HotelRati
       nameZh: '携程',
       rating: hotel.ctripRating,
       reviewCount: hotel.ctripReviewCount,
-      color: 'bg-orange-500',
+      color: 'bg-gradient-to-r from-orange-500 to-orange-600',
       icon: '✈️',
       isGlobal: false,
-      available: true
+      available: true,
+      weight: 1.3
     },
     {
       name: 'Fliggy',
       nameZh: '飞猪',
       rating: hotel.fliggyRating || 0,
       reviewCount: hotel.fliggyReviewCount || 0,
-      color: 'bg-purple-500',
+      color: 'bg-gradient-to-r from-purple-500 to-purple-600',
       icon: '🐷',
       isGlobal: false,
-      available: !!hotel.fliggyRating
+      available: !!hotel.fliggyRating,
+      weight: 1.2
     }
   ]
   
-  // 计算综合评分
+  // 计算综合评分（加权平均）
   const calculateOverallRating = () => {
-    const ratings = [
-      hotel.bookingRating,
-      hotel.agodaRating || 0,
-      hotel.hotelscomRating || 0,
-      hotel.ctripRating * 2, // 国内平台权重加倍
-      (hotel.fliggyRating || 0) * 2
-    ]
-    const total = ratings.reduce((sum, rating) => sum + rating, 0)
-    return (total / (ratings.length + 2)).toFixed(1) // 国内平台权重已加倍
+    const allPlatforms = [...globalPlatforms, ...domesticPlatforms]
+    let weightedSum = 0
+    let totalWeight = 0
+    
+    allPlatforms.forEach(platform => {
+      if (platform.available && platform.rating > 0) {
+        weightedSum += platform.rating * platform.weight
+        totalWeight += platform.weight
+      }
+    })
+    
+    return totalWeight > 0 ? (weightedSum / totalWeight).toFixed(1) : '0.0'
   }
   
   const overallRating = calculateOverallRating()

@@ -13,17 +13,21 @@ export interface Hotel {
   agodaRating?: number
   hotelscomRating?: number
   fliggyRating?: number
+  airbnbRating?: number
   reviewCount: number
   bookingReviewCount: number
   ctripReviewCount: number
   agodaReviewCount?: number
   hotelscomReviewCount?: number
   fliggyReviewCount?: number
+  airbnbReviewCount?: number
   price: number
   location: string
   locationZh?: string
   description: string
   descriptionZh?: string
+  advantages?: string[]  // 酒店优点总结
+  advantagesZh?: string[] // 中文优点总结
   amenities: string[]
   featured?: boolean
 }
