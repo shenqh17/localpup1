@@ -1,55 +1,42 @@
-<svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <!-- 背景圆形 - 金属质感 -->
-  <circle cx="60" cy="60" r="55" fill="url(#gradient-bg)" stroke="url(#gradient-border)" stroke-width="2"/>
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- 背景圆形 -->
+  <circle cx="100" cy="100" r="95" fill="url(#gradient-bg)" stroke="url(#gradient-border)" stroke-width="2"/>
   
-  <!-- 金属光泽效果 -->
-  <circle cx="60" cy="60" r="55" fill="url(#metal-shine)" opacity="0.3"/>
+  <!-- 小狗头部轮廓 -->
+  <path d="M100 40C80 40 60 60 60 80C60 100 80 120 100 120C120 120 140 100 140 80C140 60 120 40 100 40Z" fill="url(#gradient-dog)"/>
   
-  <!-- 小狗头部 -->
-  <circle cx="60" cy="45" r="20" fill="white" stroke="url(#gradient-border)" stroke-width="2"/>
+  <!-- 左耳 -->
+  <path d="M70 50C65 40 55 35 50 40C45 45 50 55 60 60C65 55 70 50 70 50Z" fill="url(#gradient-ear)"/>
   
-  <!-- 耳朵 -->
-  <path d="M45,35 Q40,25 35,30 Q40,35 45,40 Z" fill="url(#gradient-primary)"/>
-  <path d="M75,35 Q80,25 85,30 Q80,35 75,40 Z" fill="url(#gradient-primary)"/>
+  <!-- 右耳 -->
+  <path d="M130 50C135 40 145 35 150 40C155 45 150 55 140 60C135 55 130 50 130 50Z" fill="url(#gradient-ear)"/>
   
-  <!-- 耳朵内部 -->
-  <path d="M43,33 Q40,28 37,31 Q40,34 43,37 Z" fill="white" opacity="0.3"/>
-  <path d="M77,33 Q80,28 83,31 Q80,34 77,37 Z" fill="white" opacity="0.3"/>
+  <!-- 左眼 -->
+  <ellipse cx="85" cy="75" rx="8" ry="10" fill="white"/>
+  <ellipse cx="85" cy="75" rx="4" ry="6" fill="#1E293B"/>
   
-  <!-- 眼睛 -->
-  <circle cx="52" cy="42" r="3" fill="#1F2937"/>
-  <circle cx="68" cy="42" r="3" fill="#1F2937"/>
-  
-  <!-- 眼睛高光 -->
-  <circle cx="51" cy="41" r="1" fill="white"/>
-  <circle cx="67" cy="41" r="1" fill="white"/>
+  <!-- 右眼 -->
+  <ellipse cx="115" cy="75" rx="8" ry="10" fill="white"/>
+  <ellipse cx="115" cy="75" rx="4" ry="6" fill="#1E293B"/>
   
   <!-- 鼻子 -->
-  <circle cx="60" cy="50" r="4" fill="#DC2626"/>
-  <circle cx="60" cy="50" r="2" fill="#FCA5A5" opacity="0.5"/>
+  <ellipse cx="100" cy="90" rx="6" ry="4" fill="#1E293B"/>
   
   <!-- 嘴巴 -->
-  <path d="M55,55 Q60,60 65,55" stroke="#4B5563" stroke-width="1.5" fill="none"/>
+  <path d="M90 100Q100 110 110 100" stroke="#1E293B" stroke-width="2" stroke-linecap="round"/>
   
-  <!-- 身体 -->
-  <ellipse cx="60" cy="85" rx="25" ry="20" fill="white" stroke="url(#gradient-border)" stroke-width="2"/>
+  <!-- 舌头 -->
+  <path d="M95 105Q100 115 105 105" fill="#FB7185"/>
   
-  <!-- 身体阴影 -->
-  <ellipse cx="60" cy="85" rx="23" ry="18" fill="url(#body-shadow)" opacity="0.1"/>
+  <!-- 领结 -->
+  <path d="M90 120C95 125 105 125 110 120L115 130C110 135 90 135 85 130L90 120Z" fill="url(#gradient-bow)"/>
   
-  <!-- 尾巴 -->
-  <path d="M85,75 Q95,65 90,85 Q85,95 80,85" fill="url(#gradient-accent)"/>
-  <path d="M85,75 Q95,65 90,85 Q85,95 80,85" fill="url(#tail-shine)" opacity="0.3"/>
+  <!-- 金属光泽效果 -->
+  <path d="M60 60C50 70 50 90 60 100C70 110 90 110 100 100C110 90 110 70 100 60C90 50 70 50 60 60Z" fill="url(#gradient-shine)" opacity="0.3"/>
   
-  <!-- 脚部 -->
-  <circle cx="45" cy="95" r="5" fill="url(#gradient-primary)"/>
-  <circle cx="60" cy="100" r="5" fill="url(#gradient-primary)"/>
-  <circle cx="75" cy="95" r="5" fill="url(#gradient-primary)"/>
-  
-  <!-- 品牌文字 -->
-  <text x="60" y="115" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#3B82F6">
-    LocalPup
-  </text>
+  <!-- 高光点 -->
+  <circle cx="75" cy="65" r="3" fill="white" opacity="0.6"/>
+  <circle cx="125" cy="65" r="3" fill="white" opacity="0.6"/>
   
   <!-- 渐变定义 -->
   <defs>
@@ -62,42 +49,34 @@
     
     <!-- 边框渐变 -->
     <linearGradient id="gradient-border" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#1D4ED8"/>
-      <stop offset="50%" stop-color="#7C3AED"/>
-      <stop offset="100%" stop-color="#DB2777"/>
-    </linearGradient>
-    
-    <!-- 主色渐变 -->
-    <linearGradient id="gradient-primary" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#2563EB"/>
-      <stop offset="100%" stop-color="#3B82F6"/>
-    </linearGradient>
-    
-    <!-- 强调色渐变 -->
-    <linearGradient id="gradient-accent" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#EC4899"/>
+      <stop offset="0%" stop-color="#60A5FA"/>
+      <stop offset="50%" stop-color="#A78BFA"/>
       <stop offset="100%" stop-color="#F472B6"/>
     </linearGradient>
     
-    <!-- 金属光泽 -->
-    <linearGradient id="metal-shine" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="white" stop-opacity="0"/>
-      <stop offset="30%" stop-color="white" stop-opacity="0.2"/>
-      <stop offset="50%" stop-color="white" stop-opacity="0.4"/>
-      <stop offset="70%" stop-color="white" stop-opacity="0.2"/>
-      <stop offset="100%" stop-color="white" stop-opacity="0"/>
+    <!-- 小狗身体渐变 -->
+    <linearGradient id="gradient-dog" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F59E0B"/>
+      <stop offset="50%" stop-color="#F97316"/>
+      <stop offset="100%" stop-color="#EA580C"/>
     </linearGradient>
     
-    <!-- 身体阴影 -->
-    <radialGradient id="body-shadow" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" stop-color="black" stop-opacity="0"/>
-      <stop offset="100%" stop-color="black" stop-opacity="0.3"/>
-    </radialGradient>
+    <!-- 耳朵渐变 -->
+    <linearGradient id="gradient-ear" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#D97706"/>
+      <stop offset="100%" stop-color="#B45309"/>
+    </linearGradient>
     
-    <!-- 尾巴光泽 -->
-    <linearGradient id="tail-shine" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="white" stop-opacity="0"/>
-      <stop offset="50%" stop-color="white" stop-opacity="0.5"/>
+    <!-- 领结渐变 -->
+    <linearGradient id="gradient-bow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10B981"/>
+      <stop offset="100%" stop-color="#059669"/>
+    </linearGradient>
+    
+    <!-- 金属光泽 -->
+    <linearGradient id="gradient-shine" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="white" stop-opacity="0.8"/>
+      <stop offset="50%" stop-color="white" stop-opacity="0.2"/>
       <stop offset="100%" stop-color="white" stop-opacity="0"/>
     </linearGradient>
   </defs>
