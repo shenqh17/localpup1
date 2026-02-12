@@ -31,6 +31,7 @@ import {
 } from 'lucide-react'
 import { hotels } from '@/data/hotels100'
 import { useI18n } from '@/lib/i18n-context'
+import HotelRatingDisplay from '@/components/HotelRatingDisplay'
 
 // 设施图标映射
 const amenityIcons: Record<string, React.ComponentType<{ className?: string }>> = {
@@ -466,43 +467,18 @@ export default function HotelDetailPage() {
               </div>
             </div>
 
-            {/* 5平台评分对比 */}
+            {/* 多平台评分对比 - 使用新组件 */}
             <div className="bg-white rounded-2xl p-6 md:p-8 shadow-sm">
               <h2 className="text-xl font-bold text-slate-900 mb-6">
                 {isZh ? '多平台评分对比' : 'Platform Ratings Comparison'}
               </h2>
               
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-                {platformRatings.map((platform) => (
-                  <a
-                    key={platform.name}
-                    href={platform.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`${platform.bgColor} rounded-xl p-4 text-center hover:shadow-md transition-shadow`}
-                  >
-                    <div className={`inline-flex items-center justify-center w-10 h-10 ${platform.color} rounded-lg mb-3`}>
-                      <span className="text-white font-bold text-sm">
-                        {platform.name.charAt(0)}
-                      </span>
-                    </div>
-                    <p className={`text-2xl font-bold ${platform.textColor}`}>
-                      {platform.rating.toFixed(1)}
-                    </p>
-                    <p className="text-sm font-medium text-slate-600 mt-1">
-                      {isZh ? platform.nameZh : platform.name}
-                    </p>
-                    <p className="text-xs text-slate-500 mt-1">
-                      {platform.reviewCount.toLocaleString()} {isZh ? '评' : 'reviews'}
-                    </p>
-                  </a>
-                ))}
-              </div>
+              <HotelRatingDisplay hotel={hotel} compact={false} />
               
-              <p className="text-sm text-slate-500 mt-4 text-center">
+              <p className="text-sm text-slate-500 mt-6 text-center">
                 {isZh 
-                  ? '评分基于真实用户评论，点击可查看详情' 
-                  : 'Ratings based on real user reviews, click to view details'}
+                  ? '评分聚合自全球前三预订平台（Booking.com、Agoda、Hotels.com）和国内前二平台（携程、飞猪）' 
+                  : 'Ratings aggregated from top 3 global booking platforms (Booking.com, Agoda, Hotels.com) and top 2 domestic platforms (Ctrip, Fliggy)'}
               </p>
             </div>
 

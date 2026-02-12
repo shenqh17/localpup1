@@ -6,6 +6,8 @@ import Image from 'next/image'
 import { Star, MapPin, Filter, ChevronLeft, ChevronRight, ChevronDown, X, SortAsc, Building2 } from 'lucide-react'
 import { hotels } from '@/data/hotels100'
 import { useI18n } from '@/lib/i18n-context'
+import { getSortedHotels, calculateOverallRating } from '@/data/hotel-utils'
+import HotelRatingDisplay from '@/components/HotelRatingDisplay'
 
 // 星级评分组件
 function StarRating({ rating, size = 'sm' }: { rating: number; size?: 'xs' | 'sm' | 'md' | 'lg' }) {
@@ -107,9 +109,10 @@ export default function HotelsPage() {
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [])
 
-  // 筛选后的酒店列表
+  // 筛选后的酒店列表 - 使用排序后的数据
   const filteredHotels = useMemo(() => {
-    let result = hotels.filter((hotel) => {
+    const sortedHotels = getSortedHotels(hotels) // 按评分从高到低排序
+    let result = sortedHotels.filter((hotel) => {
       // 价格筛选
       if (selectedPriceRange) {
         const range = priceRanges.find((r) => r.label === selectedPriceRange)
@@ -502,20 +505,9 @@ export default function HotelsPage() {
                     </span>
                   </div>
 
-                  {/* 平台评分 */}
-                  <div className="flex items-center gap-2 mb-4">
-                    <div className="flex items-center gap-1 bg-blue-50 px-2 py-1 rounded-lg border border-blue-100">
-                      <span className="text-sm font-bold text-blue-700">
-                        {hotel.bookingRating}
-                      </span>
-                      <span className="text-xs text-blue-600">Booking</span>
-                    </div>
-                    <div className="flex items-center gap-1 bg-sky-50 px-2 py-1 rounded-lg border border-sky-100">
-                      <span className="text-sm font-bold text-sky-700">
-                        {hotel.ctripRating}
-                      </span>
-                      <span className="text-xs text-sky-600">{isZh ? '携程' : 'Ctrip'}</span>
-                    </div>
+                  {/* 平台评分 - 使用新组件 */}
+                  <div className="mb-4">
+                    <HotelRatingDisplay hotel={hotel} compact={true} />
                   </div>
 
                   {/* 设施标签 */}
