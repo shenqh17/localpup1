@@ -42,12 +42,16 @@ export default function Home() {
     // 这里可以添加搜索逻辑
   }
   
-  // 初始化：默认选择第一个酒店
+  // 西湖断桥残雪背景图 - 真正的杭州断桥残雪
+  const westLakeBackground = 'https://images.unsplash.com/photo-1544984243-ec57ea16fe25?w=1920&q=80'
+  
+  // 初始化：默认使用西湖背景
   useEffect(() => {
+    setBackgroundImage(westLakeBackground)
+    
     if (hotels.length > 0 && !selectedHotel) {
       const firstHotel = hotels[0]
       setSelectedHotel(firstHotel)
-      setBackgroundImage(firstHotel.image)
     }
   }, [selectedHotel])
   
@@ -88,12 +92,32 @@ export default function Home() {
         <header className="sticky top-0 z-50 backdrop-blur-xl bg-white/80 border-b border-slate-200">
           <div className="container mx-auto px-4 py-4">
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-600 to-accent-600 flex items-center justify-center">
-                  <span className="text-white font-black text-lg">LP</span>
+              <div className="flex items-center gap-3">
+                {/* 新Logo */}
+                <div className="relative w-10 h-10">
+                  <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-primary-600 to-accent-600 flex items-center justify-center">
+                    {/* 小狗Logo简化版 */}
+                    <div className="relative w-6 h-6">
+                      {/* 耳朵 */}
+                      <div className="absolute top-0 left-1 w-2 h-2 bg-primary-700 rounded-tl-full"></div>
+                      <div className="absolute top-0 right-1 w-2 h-2 bg-primary-700 rounded-tr-full"></div>
+                      {/* 头部 */}
+                      <div className="absolute top-2 left-1/2 transform -translate-x-1/2 w-5 h-4 bg-white rounded-full"></div>
+                      {/* 眼睛 */}
+                      <div className="absolute top-3 left-2 w-1 h-1 bg-slate-800 rounded-full"></div>
+                      <div className="absolute top-3 right-2 w-1 h-1 bg-slate-800 rounded-full"></div>
+                      {/* 鼻子 */}
+                      <div className="absolute top-4 left-1/2 transform -translate-x-1/2 w-1.5 h-1.5 bg-red-500 rounded-full"></div>
+                    </div>
+                  </div>
+                  {/* 金属光泽 */}
+                  <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-white/20 to-transparent opacity-30"></div>
                 </div>
                 <div>
-                  <div className="font-black text-slate-900 text-xl">LocalPup</div>
+                  <div className="font-black text-slate-900 text-xl flex items-center gap-1">
+                    <span>LocalPup</span>
+                    <span className="text-xs text-primary-600 font-normal">®</span>
+                  </div>
                   <div className="text-slate-500 text-xs">{isZh ? "杭州酒店精选" : "Hangzhou Hotel Curator"}</div>
                 </div>
               </div>
@@ -256,14 +280,29 @@ export default function Home() {
           <div className="container mx-auto px-4">
             <div className="flex flex-col md:flex-row justify-between items-center">
               <div className="mb-6 md:mb-0">
-                <div className="flex items-center gap-2 mb-2">
-                  <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary-600 to-accent-600 flex items-center justify-center">
-                    <span className="text-white font-black text-sm">LP</span>
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="relative w-9 h-9">
+                    <div className="absolute inset-0 rounded-lg bg-gradient-to-br from-primary-600 to-accent-600 flex items-center justify-center">
+                      {/* 小狗Logo简化版 */}
+                      <div className="relative w-5 h-5">
+                        {/* 耳朵 */}
+                        <div className="absolute top-0 left-0.5 w-1.5 h-1.5 bg-primary-700 rounded-tl-full"></div>
+                        <div className="absolute top-0 right-0.5 w-1.5 h-1.5 bg-primary-700 rounded-tr-full"></div>
+                        {/* 头部 */}
+                        <div className="absolute top-1.5 left-1/2 transform -translate-x-1/2 w-4 h-3 bg-white rounded-full"></div>
+                        {/* 眼睛 */}
+                        <div className="absolute top-2 left-1 w-0.75 h-0.75 bg-slate-800 rounded-full"></div>
+                        <div className="absolute top-2 right-1 w-0.75 h-0.75 bg-slate-800 rounded-full"></div>
+                      </div>
+                    </div>
                   </div>
-                  <div className="font-black text-slate-900">LocalPup</div>
+                  <div>
+                    <div className="font-black text-slate-900 text-lg">LocalPup</div>
+                    <div className="text-slate-500 text-xs">{isZh ? "杭州酒店精选" : "Hangzhou Hotel Curator"}</div>
+                  </div>
                 </div>
                 <p className="text-slate-500 text-sm">
-                  {isZh ? "杭州酒店精选推荐平台" : "Hangzhou Hotel Curator Platform"}
+                  {isZh ? "基于6大平台的智能酒店推荐平台" : "Intelligent hotel recommendation platform based on 6 major platforms"}
                 </p>
               </div>
               
