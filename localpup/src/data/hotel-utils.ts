@@ -114,7 +114,14 @@ export function getTopHotelsByPriceLevel(hotels: Hotel[], countPerLevel: number 
   return result
 }
 
-// 导出排序后的酒店数据
+// 导入评分计算函数
+import { calculateWeightedScore } from '@/lib/rating-converter'
+
+// 导出排序后的酒店数据（按Pup综合评分排序）
 export function getSortedHotels(hotels: Hotel[]): Hotel[] {
-  return sortHotelsByRating(hotels)
+  return [...hotels].sort((a, b) => {
+    const ratingA = calculateWeightedScore(a)
+    const ratingB = calculateWeightedScore(b)
+    return ratingB - ratingA // 降序排列
+  })
 }

@@ -4,7 +4,7 @@
 
 :root {
   --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 255, 255, 255;
+  --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
 }
 
@@ -18,212 +18,108 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: rgb(var(--background-start-rgb));
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
 }
 
-/* 移动端优化 */
-@layer utilities {
-  /* 触摸优化 */
-  .tap-highlight-none {
-    -webkit-tap-highlight-color: transparent;
-  }
-  
-  .tap-highlight-light {
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
-  }
-  
-  /* 滚动优化 */
-  .scroll-smooth {
-    scroll-behavior: smooth;
-  }
-  
-  .scrollbar-thin {
-    scrollbar-width: thin;
-  }
-  
-  /* 移动端安全区域 */
-  .safe-top {
-    padding-top: env(safe-area-inset-top);
-  }
-  
-  .safe-bottom {
-    padding-bottom: env(safe-area-inset-bottom);
-  }
-  
-  .safe-left {
-    padding-left: env(safe-area-inset-left);
-  }
-  
-  .safe-right {
-    padding-right: env(safe-area-inset-right);
-  }
-  
-  /* 移动端字体优化 */
-  .text-balance {
-    text-wrap: balance;
-  }
-  
-  /* 防止文本溢出 */
-  .text-ellipsis {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-  
-  /* 移动端按钮优化 */
-  .btn-mobile {
-    min-height: 44px;
-    min-width: 44px;
-  }
-  
-  /* 移动端卡片阴影优化 */
-  .card-shadow-mobile {
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  }
-  
-  .card-shadow-mobile-hover {
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
-  }
+/* 修复重叠问题 */
+.z-fix {
+  position: relative;
+  z-index: 1;
 }
 
-/* 移动端特定样式 */
-@media (max-width: 640px) {
-  /* 隐藏桌面元素 */
-  .mobile-hidden {
-    display: none !important;
-  }
-  
-  /* 显示移动端元素 */
-  .mobile-only {
-    display: block !important;
-  }
-  
-  /* 移动端字体调整 */
-  .text-mobile-sm {
-    font-size: 0.875rem;
-    line-height: 1.25rem;
-  }
-  
-  .text-mobile-base {
-    font-size: 1rem;
-    line-height: 1.5rem;
-  }
-  
-  .text-mobile-lg {
-    font-size: 1.125rem;
-    line-height: 1.75rem;
-  }
-  
-  /* 移动端间距调整 */
-  .space-mobile-sm {
-    gap: 0.5rem;
-  }
-  
-  .space-mobile-base {
-    gap: 1rem;
-  }
-  
-  .space-mobile-lg {
-    gap: 1.5rem;
-  }
-  
-  /* 移动端容器宽度 */
-  .container-mobile {
-    padding-left: 1rem;
-    padding-right: 1rem;
-  }
-  
-  /* 移动端图片优化 */
-  .image-mobile {
-    max-width: 100%;
-    height: auto;
-  }
+/* 确保气泡不重叠 */
+.rating-bubble-container {
+  position: relative;
+  z-index: 10;
 }
 
-/* 平板端优化 */
-@media (min-width: 641px) and (max-width: 1024px) {
-  .tablet-hidden {
-    display: none !important;
-  }
-  
-  .tablet-only {
-    display: block !important;
-  }
+/* 工具提示防重叠 */
+.tooltip-fix {
+  z-index: 9999 !important;
+  pointer-events: none;
 }
 
-/* 防止iOS缩放 */
-@supports (-webkit-touch-callout: none) {
-  input,
-  textarea,
-  select {
-    font-size: 16px !important; /* 防止iOS自动缩放 */
-  }
+/* 确保卡片内容不溢出 */
+.card-content-fix {
+  overflow: visible;
+  position: relative;
 }
 
-/* 改善移动端表单体验 */
-input[type="text"],
-input[type="email"],
-input[type="password"],
-input[type="number"],
-input[type="tel"],
-input[type="url"],
-textarea,
-select {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  border-radius: 0.5rem;
+/* 修复flex布局中的重叠 */
+.flex-fix {
+  flex-shrink: 0;
 }
 
-/* 改善移动端滚动性能 */
-.overflow-scroll-touch {
-  -webkit-overflow-scrolling: touch;
+/* 确保悬停效果不干扰布局 */
+.hover-fix {
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
-/* 改善移动端动画性能 */
-.will-change-transform {
+/* 评分气泡特殊样式 */
+.compact-bubble {
+  transform: translateZ(0);
+  isolation: isolate;
   will-change: transform;
 }
 
-.will-change-opacity {
-  will-change: opacity;
+/* 防止文本重叠 */
+.text-overlap-fix {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-/* 移动端加载优化 */
-.lazy-load {
-  opacity: 0;
-  transition: opacity 0.3s ease-in-out;
+/* 确保网格布局整齐 */
+.grid-fix {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
 }
 
-.lazy-load.loaded {
-  opacity: 1;
+/* 响应式修复 */
+@media (max-width: 768px) {
+  .mobile-fix {
+    flex-direction: column;
+  }
+  
+  .mobile-bubble-fix {
+    width: 100%;
+    justify-content: center;
+  }
 }
 
-/* 移动端模态框优化 */
-.modal-mobile {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 50;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 1rem;
+/* 动画优化 */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-.modal-content-mobile {
-  max-height: 90vh;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
+.fade-in {
+  animation: fadeIn 0.3s ease-out;
 }
 
-/* 移动端底部导航安全区域 */
-.bottom-nav-safe {
-  padding-bottom: calc(1rem + env(safe-area-inset-bottom));
+/* 滚动条美化 */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
