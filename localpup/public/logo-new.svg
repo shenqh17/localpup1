@@ -1,0 +1,95 @@
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- 背景圆形 - 专业质感 -->
+  <circle cx="100" cy="100" r="96" fill="url(#bg-gradient)" stroke="url(#border-gradient)" stroke-width="1.5"/>
+  
+  <!-- 小狗头部 - 更清晰的小狗特征 -->
+  <path d="M100 50C75 50 55 70 55 95C55 120 75 140 100 140C125 140 145 120 145 95C145 70 125 50 100 50Z" fill="url(#dog-gradient)"/>
+  
+  <!-- 左耳 - 下垂耳设计 -->
+  <path d="M70 60C65 45 55 40 50 45C45 50 50 65 60 75C65 70 70 65 70 60Z" fill="url(#ear-gradient)"/>
+  
+  <!-- 右耳 - 下垂耳设计 -->
+  <path d="M130 60C135 45 145 40 150 45C155 50 150 65 140 75C135 70 130 65 130 60Z" fill="url(#ear-gradient)"/>
+  
+  <!-- 面部特征 -->
+  <!-- 左眼 -->
+  <ellipse cx="80" cy="85" rx="10" ry="12" fill="white"/>
+  <ellipse cx="80" cy="85" rx="5" ry="7" fill="#1E293B"/>
+  <circle cx="82" cy="83" r="2" fill="white" opacity="0.8"/>
+  
+  <!-- 右眼 -->
+  <ellipse cx="120" cy="85" rx="10" ry="12" fill="white"/>
+  <ellipse cx="120" cy="85" rx="5" ry="7" fill="#1E293B"/>
+  <circle cx="122" cy="83" r="2" fill="white" opacity="0.8"/>
+  
+  <!-- 鼻子 -->
+  <ellipse cx="100" cy="105" rx="8" ry="5" fill="#1E293B"/>
+  <circle cx="102" cy="103" r="1.5" fill="white" opacity="0.6"/>
+  
+  <!-- 嘴巴和舌头 -->
+  <path d="M85 115Q100 130 115 115" stroke="#1E293B" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M90 120Q100 130 110 120" fill="#FB7185" stroke="#FB7185" stroke-width="1"/>
+  
+  <!-- 脸颊红晕 -->
+  <circle cx="70" cy="95" r="6" fill="#FECACA" opacity="0.4"/>
+  <circle cx="130" cy="95" r="6" fill="#FECACA" opacity="0.4"/>
+  
+  <!-- 项圈 -->
+  <path d="M75 125C85 130 115 130 125 125L130 135C120 140 80 140 70 135L75 125Z" fill="url(#collar-gradient)"/>
+  
+  <!-- 项圈装饰 -->
+  <circle cx="100" cy="130" r="4" fill="#3B82F6"/>
+  <circle cx="100" cy="130" r="1.5" fill="white"/>
+  
+  <!-- 毛发纹理 -->
+  <path d="M65 70C60 75 60 85 65 90" stroke="#B45309" stroke-width="1.5" stroke-linecap="round" opacity="0.3"/>
+  <path d="M135 70C140 75 140 85 135 90" stroke="#B45309" stroke-width="1.5" stroke-linecap="round" opacity="0.3"/>
+  <path d="M100 55C95 60 95 70 100 75" stroke="#D97706" stroke-width="1" stroke-linecap="round" opacity="0.2"/>
+  
+  <!-- 高光效果 -->
+  <path d="M75 65C65 75 65 95 75 105C85 115 105 115 115 105C125 95 125 75 115 65C105 55 85 55 75 65Z" fill="url(#shine-gradient)" opacity="0.15"/>
+  
+  <!-- 顶部高光 -->
+  <ellipse cx="100" cy="60" rx="25" ry="8" fill="white" opacity="0.1"/>
+  
+  <!-- 渐变定义 -->
+  <defs>
+    <!-- 背景渐变 -->
+    <linearGradient id="bg-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F8FAFC"/>
+      <stop offset="100%" stop-color="#E2E8F0"/>
+    </linearGradient>
+    
+    <!-- 边框渐变 -->
+    <linearGradient id="border-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#CBD5E1"/>
+      <stop offset="100%" stop-color="#94A3B8"/>
+    </linearGradient>
+    
+    <!-- 小狗身体渐变 -->
+    <linearGradient id="dog-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F59E0B"/>
+      <stop offset="50%" stop-color="#F97316"/>
+      <stop offset="100%" stop-color="#EA580C"/>
+    </linearGradient>
+    
+    <!-- 耳朵渐变 -->
+    <linearGradient id="ear-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#D97706"/>
+      <stop offset="50%" stop-color="#B45309"/>
+      <stop offset="100%" stop-color="#92400E"/>
+    </linearGradient>
+    
+    <!-- 项圈渐变 -->
+    <linearGradient id="collar-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3B82F6"/>
+      <stop offset="100%" stop-color="#1D4ED8"/>
+    </linearGradient>
+    
+    <!-- 高光渐变 -->
+    <radialGradient id="shine-gradient" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="white" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="white" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+</svg>

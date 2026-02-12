@@ -3,8 +3,9 @@
 import { useState, useEffect } from 'react'
 import Script from 'next/script'
 import { hotels } from '@/data/hotels100'
-import PremiumSearchBox from '@/components/PremiumSearchBox'
+import FunctionalSearchBox from '@/components/FunctionalSearchBox'
 import RecommendedHotelBubbles from '@/components/RecommendedHotelBubbles'
+import BackgroundCarousel from '@/components/BackgroundCarousel'
 import { Hotel } from '@/data/hotels100'
 import { useI18n } from '@/lib/i18n-context'
 
@@ -64,27 +65,8 @@ export default function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
       
-      {/* 动态背景 */}
-      <div className="fixed inset-0 -z-10 overflow-hidden">
-        {backgroundImage && (
-          <>
-            {/* 背景图片 */}
-            <div 
-              className="absolute inset-0 bg-cover bg-center transition-all duration-1000"
-              style={{ backgroundImage: `url(${backgroundImage})` }}
-            />
-            
-            {/* 渐变遮罩 */}
-            <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-white/10" />
-            
-            {/* 光效 */}
-            <div className="absolute inset-0 bg-gradient-to-br from-primary-500/5 via-transparent to-accent-500/5" />
-          </>
-        )}
-        
-        {/* 网格背景 */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.1),transparent_70%)]" />
-      </div>
+      {/* 杭州背景轮播 */}
+      <BackgroundCarousel interval={10000} />
       
       {/* 主内容 */}
       <div className="relative min-h-screen">
@@ -158,9 +140,9 @@ export default function Home() {
             </p>
           </div>
           
-          {/* 美化搜索框 */}
+          {/* 功能完整的搜索框 */}
           <div className="mb-16">
-            <PremiumSearchBox onSearch={handleSearch} />
+            <FunctionalSearchBox onSearch={handleSearch} />
           </div>
           
           {/* 推荐酒店气泡 */}
