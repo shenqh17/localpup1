@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client'
-import { hash } from 'bcryptjs'
+// import { hash } from 'bcryptjs' // 暂时不需要用户认证
 
 const prisma = new PrismaClient()
 
@@ -190,20 +190,20 @@ async function main() {
     },
   })
 
-  // 创建测试用户 (密码: password123)
-  const hashedPassword = await hash('password123', 12)
-  await prisma.user.upsert({
-    where: { email: 'test@example.com' },
-    update: {},
-    create: {
-      email: 'test@example.com',
-      name: 'Test User',
-      hashedPassword,
-      role: 'user',
-      isActive: true,
-    },
-  })
-  console.log('Test user created: test@example.com / password123')
+  // 创建测试用户 (密码: password123) - 注释掉，因为当前项目不需要用户系统
+  // const hashedPassword = await hash('password123', 12)
+  // await prisma.user.upsert({
+  //   where: { email: 'test@example.com' },
+  //   update: {},
+  //   create: {
+  //     email: 'test@example.com',
+  //     name: 'Test User',
+  //     hashedPassword,
+  //     role: 'user',
+  //     isActive: true,
+  //   },
+  // })
+  // console.log('Test user created: test@example.com / password123')
 
   // 创建示例景点
   await prisma.attraction.create({
