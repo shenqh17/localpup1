@@ -10,12 +10,17 @@ export function calculateOverallRating(hotel: Hotel): number {
     fliggyRating: 1.2      // 飞猪权重较高
   }
   
+  // 处理可选属性，如果不存在则使用0
+  const agodaRating = hotel.agodaRating || 0
+  const hotelscomRating = hotel.hotelscomRating || 0
+  const fliggyRating = hotel.fliggyRating || 0
+  
   const weightedSum = 
     hotel.bookingRating * weights.bookingRating +
-    hotel.agodaRating * weights.agodaRating +
-    hotel.hotelscomRating * weights.hotelscomRating +
+    agodaRating * weights.agodaRating +
+    hotelscomRating * weights.hotelscomRating +
     hotel.ctripRating * weights.ctripRating +
-    hotel.fliggyRating * weights.fliggyRating
+    fliggyRating * weights.fliggyRating
   
   const totalWeight = 
     weights.bookingRating + 
@@ -105,10 +110,10 @@ export function getRatingStatistics(hotels: Hotel[]) {
   return {
     overall: calculateStats(hotels.map(h => calculateOverallRating(h))),
     booking: calculateStats(hotels.map(h => h.bookingRating)),
-    agoda: calculateStats(hotels.map(h => h.agodaRating)),
-    hotelscom: calculateStats(hotels.map(h => h.hotelscomRating)),
+    agoda: calculateStats(hotels.map(h => h.agodaRating || 0)),
+    hotelscom: calculateStats(hotels.map(h => h.hotelscomRating || 0)),
     ctrip: calculateStats(hotels.map(h => h.ctripRating)),
-    fliggy: calculateStats(hotels.map(h => h.fliggyRating))
+    fliggy: calculateStats(hotels.map(h => h.fliggyRating || 0))
   }
 }
 
