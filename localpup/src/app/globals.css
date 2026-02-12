@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -6,6 +9,8 @@
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
+  --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-heading: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -24,6 +29,46 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
+  font-family: var(--font-primary);
+  font-weight: 500;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* 标题使用更粗的字体 */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  letter-spacing: -0.025em;
+}
+
+/* 按钮和重要文本使用粗体 */
+.btn, .font-bold, .font-black {
+  font-family: var(--font-heading);
+  font-weight: 800;
+}
+
+/* 评分气泡特殊字体 */
+.rating-bubble {
+  font-family: 'Inter', sans-serif;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+}
+
+/* 金属雕刻效果文本 */
+.carved-text {
+  font-family: 'Inter', sans-serif;
+  font-weight: 900;
+  text-shadow: 
+    0 1px 0 rgba(0, 0, 0, 0.3),
+    0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* 高饱和度模块字体 */
+.premium-module {
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+  letter-spacing: -0.01em;
 }
 
 /* 修复重叠问题 */

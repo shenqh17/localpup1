@@ -31,7 +31,7 @@ import {
 } from 'lucide-react'
 import { hotels } from '@/data/hotels100'
 import { useI18n } from '@/lib/i18n-context'
-import HotelRatingDisplay from '@/components/HotelRatingDisplay'
+import PremiumRatingModules from '@/components/PremiumRatingModules'
 
 // 设施图标映射
 const amenityIcons: Record<string, React.ComponentType<{ className?: string }>> = {
@@ -473,7 +473,7 @@ export default function HotelDetailPage() {
                 {isZh ? '多平台评分对比' : 'Platform Ratings Comparison'}
               </h2>
               
-              <HotelRatingDisplay hotel={hotel} compact={false} />
+              <PremiumRatingModules hotel={hotel} />
               
               <p className="text-sm text-slate-500 mt-6 text-center">
                 {isZh 
