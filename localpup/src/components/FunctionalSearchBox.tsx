@@ -303,7 +303,11 @@ export default function FunctionalSearchBox({ onSearch, className = '' }: Functi
                           <span className="text-white font-medium w-8 text-center">{adults}</span>
                           <button
                             type="button"
-                            onClick={() => setAdults(adults + 1)}
+                            onClick={() => {
+    if (adults + children < 8) {
+      setAdults(adults + 1)
+    }
+  }}
                             className="w-8 h-8 rounded-full bg-slate-700 flex items-center justify-center text-white hover:bg-slate-600"
                           >
                             +
@@ -331,7 +335,11 @@ export default function FunctionalSearchBox({ onSearch, className = '' }: Functi
                           <span className="text-white font-medium w-8 text-center">{children}</span>
                           <button
                             type="button"
-                            onClick={() => setChildren(children + 1)}
+                            onClick={() => {
+    if (adults + children < 8) {
+      setChildren(children + 1)
+    }
+  }}
                             className="w-8 h-8 rounded-full bg-slate-700 flex items-center justify-center text-white hover:bg-slate-600"
                           >
                             +
@@ -339,10 +347,16 @@ export default function FunctionalSearchBox({ onSearch, className = '' }: Functi
                         </div>
                       </div>
                       
-                      <div className="pt-4 border-t border-white/10">
+                                            <div className="pt-4 border-t border-white/10">
                         <div className="text-white/60 text-xs">
-                          {isZh ? "最多可容纳 8 位客人" : "Maximum 8 guests"}
+                          {`${isZh ? '最多可容纳' : 'Maximum'} ${adults + children}/8 ${isZh ? '位客人' : 'guests'}`}
                         </div>
+                        {(adults + children) >= 8 && (
+                          <div className="text-amber-400 text-xs mt-1">
+                            {isZh ? '已达到最大人数限制' : 'Maximum guests reached'}
+                          </div>
+                        )}
+                      </div>
                       </div>
                     </div>
                   </div>
