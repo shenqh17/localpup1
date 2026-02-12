@@ -305,34 +305,116 @@ model RestaurantImage {
 // 视频展示模型
 model Video {
   id            String   @id @default(uuid())
-  
+
   title         String   // 英文标题
   titleZh       String?  // 中文标题
   description   String?  @db.Text  // 英文描述
   descriptionZh String?  @db.Text  // 中文描述
-  
+
   // 视频信息
   platform      String   // youtube 或 tiktok
   videoId       String   // YouTube video ID 或 TikTok video ID
   thumbnailUrl  String?  // 缩略图URL
   duration      String?  // 时长，如 "5:32"
-  
+
   // 分类和排序
   category      String   @default("hotel") // hotel, attraction, dining, guide
   sortOrder     Int      @default(0)
-  
+
   // 关联
   hotelId       String?  // 关联酒店（可选）
-  
+
   // 状态
   isActive      Boolean  @default(true)
   isFeatured    Boolean  @default(false)
-  
+
   // 时间戳
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
-  
+
   @@index([category])
   @@index([isFeatured])
   @@index([isActive])
+}
+
+// 用户收藏模型
+model Favorite {
+  id          String   @id @default(uuid())
+  userId      String
+  itemId      String   // 关联的项目ID
+  itemType    String   // hotel, attraction, restaurant
+  note        String?  @db.Text // 用户备注
+
+  createdAt   DateTime @default(now())
+
+  @@unique([userId, itemId, itemType])
+  @@index([userId])
+  @@index([itemType])
+}
+
+// 用户模型（用于认证）
+model User {
+  id            String   @id @default(uuid())
+  email         String   @unique
+  name          String?
+  image         String?
+
+  // 认证相关
+  emailVerified DateTime?
+  hashedPassword String?
+
+  // 状态
+  isActive      Boolean  @default(true)
+  role          String   @default("user") // user, admin
+
+  // 关联
+  accounts      Account[]
+  sessions      Session[]
+  favorites     Favorite[]
+
+  // 时间戳
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([email])
+}
+
+// NextAuth Account 模型
+model Account {
+  id                String  @id @default(uuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+// NextAuth Session 模型
+model Session {
+  id           String   @id @default(uuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+// NextAuth VerificationToken 模型
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
 }

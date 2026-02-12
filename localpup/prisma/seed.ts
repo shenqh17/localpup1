@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client'
+import { hash } from 'bcryptjs'
 
 const prisma = new PrismaClient()
 
@@ -176,16 +177,33 @@ async function main() {
   })
 
   // 创建 API Key
-  await prisma.apiKey.create({
-    data: {
-      key: 'lp_dev_' + Math.random().toString(36).substring(2, 15),
-      name: 'Development Key',
+  await prisma.apiKey.upsert({
+    where: { key: 'lp_dev_demo_key_12345' },
+    update: {},
+    create: {
+      key: 'lp_dev_demo_key_12345',
+      name: 'Development Demo Key',
       isActive: true,
       rateLimit: 1000,
       requestsToday: 0,
       lastResetAt: new Date(),
     },
   })
+
+  // 创建测试用户 (密码: password123)
+  const hashedPassword = await hash('password123', 12)
+  await prisma.user.upsert({
+    where: { email: 'test@example.com' },
+    update: {},
+    create: {
+      email: 'test@example.com',
+      name: 'Test User',
+      hashedPassword,
+      role: 'user',
+      isActive: true,
+    },
+  })
+  console.log('Test user created: test@example.com / password123')
 
   // 创建示例景点
   await prisma.attraction.create({
