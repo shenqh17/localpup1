@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
-import { Search, Filter, MapPin, Calendar, Users, ChevronDown, X, User, Child } from 'lucide-react'
+import { Search, Filter, MapPin, Calendar, Users, ChevronDown, X, User as UserIcon, Baby } from 'lucide-react'
 import { useI18n } from '@/lib/i18n-context'
 
 interface FunctionalSearchBoxProps {
@@ -25,7 +25,7 @@ export default function FunctionalSearchBox({ onSearch, className = '' }: Functi
   const [checkIn, setCheckIn] = useState('')
   const [checkOut, setCheckOut] = useState('')
   const [adults, setAdults] = useState(2)
-  const [children, setChildren] = useState(0)
+  const [children, setBabyren] = useState(0)
   const [showDatePicker, setShowDatePicker] = useState(false)
   const [showGuestPicker, setShowGuestPicker] = useState(false)
   const [isFocused, setIsFocused] = useState(false)
@@ -286,7 +286,7 @@ export default function FunctionalSearchBox({ onSearch, className = '' }: Functi
                       {/* 成人数量 */}
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-3">
-                          <User className="w-5 h-5 text-white/80" />
+                          <UserIcon className="w-5 h-5 text-white/80" />
                           <div>
                             <div className="text-white font-medium">{isZh ? "成人" : "Adults"}</div>
                             <div className="text-white/60 text-xs">{isZh ? "13岁以上" : "Age 13+"}</div>
@@ -318,16 +318,16 @@ export default function FunctionalSearchBox({ onSearch, className = '' }: Functi
                       {/* 儿童数量 */}
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-3">
-                          <Child className="w-5 h-5 text-white/80" />
+                          <Baby className="w-5 h-5 text-white/80" />
                           <div>
-                            <div className="text-white font-medium">{isZh ? "儿童" : "Children"}</div>
+                            <div className="text-white font-medium">{isZh ? "儿童" : "Babyren"}</div>
                             <div className="text-white/60 text-xs">{isZh ? "2-12岁" : "Age 2-12"}</div>
                           </div>
                         </div>
                         <div className="flex items-center gap-3">
                           <button
                             type="button"
-                            onClick={() => setChildren(Math.max(0, children - 1))}
+                            onClick={() => setBabyren(Math.max(0, children - 1))}
                             className="w-8 h-8 rounded-full bg-slate-700 flex items-center justify-center text-white hover:bg-slate-600"
                           >
                             -
@@ -337,7 +337,7 @@ export default function FunctionalSearchBox({ onSearch, className = '' }: Functi
                             type="button"
                             onClick={() => {
     if (adults + children < 8) {
-      setChildren(children + 1)
+      setBabyren(children + 1)
     }
   }}
                             className="w-8 h-8 rounded-full bg-slate-700 flex items-center justify-center text-white hover:bg-slate-600"
@@ -346,8 +346,8 @@ export default function FunctionalSearchBox({ onSearch, className = '' }: Functi
                           </button>
                         </div>
                       </div>
-                      
-                                            <div className="pt-4 border-t border-white/10">
+
+                      <div className="pt-4 border-t border-white/10">
                         <div className="text-white/60 text-xs">
                           {`${isZh ? '最多可容纳' : 'Maximum'} ${adults + children}/8 ${isZh ? '位客人' : 'guests'}`}
                         </div>
@@ -357,12 +357,11 @@ export default function FunctionalSearchBox({ onSearch, className = '' }: Functi
                           </div>
                         )}
                       </div>
-                      </div>
                     </div>
                   </div>
                 )}
               </div>
-              
+
               {/* 更多筛选按钮 */}
               <div className="relative">
                 <button
