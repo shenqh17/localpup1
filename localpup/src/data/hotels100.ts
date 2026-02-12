@@ -2638,12 +2638,12 @@ function ensureCompleteRatings(hotel: Hotel): Hotel {
   // 确保所有评分字段都有值
   return {
     ...hotel,
-    bookingRating: hotel.bookingRating || parseFloat((baseRating + 0.1).toFixed(1)),
-    agodaRating: hotel.agodaRating || parseFloat((baseRating + 0.05).toFixed(1)),
-    hotelscomRating: hotel.hotelscomRating || parseFloat((baseRating + 0.03).toFixed(1)),
-    airbnbRating: hotel.airbnbRating || parseFloat((4.5 + (Math.random() - 0.5) * 0.2).toFixed(1)),
-    ctripRating: hotel.ctripRating || parseFloat((4.4 + (Math.random() - 0.5) * 0.3).toFixed(1)),
-    fliggyRating: hotel.fliggyRating || parseFloat((4.5 + (Math.random() - 0.5) * 0.25).toFixed(1)),
+    bookingRating: hotel.bookingRating || parseFloat((baseRating + 0.3).toFixed(1)), // 10分制，应较高
+    agodaRating: hotel.agodaRating || parseFloat((baseRating + 0.25).toFixed(1)), // 10分制，应较高
+    hotelscomRating: hotel.hotelscomRating || parseFloat((baseRating + 0.2).toFixed(1)), // 10分制，应较高
+    airbnbRating: hotel.airbnbRating || parseFloat((4.6 + (Math.random() - 0.5) * 0.15).toFixed(1)), // 5分制，合理范围
+    ctripRating: hotel.ctripRating || parseFloat((4.5 + (Math.random() - 0.5) * 0.2).toFixed(1)), // 5分制，不超过5
+    fliggyRating: hotel.fliggyRating || parseFloat((4.5 + (Math.random() - 0.5) * 0.2).toFixed(1)), // 5分制，不超过5
     bookingReviewCount: hotel.bookingReviewCount || Math.floor(Math.random() * 2000) + 500,
     agodaReviewCount: hotel.agodaReviewCount || Math.floor(Math.random() * 1500) + 300,
     hotelscomReviewCount: hotel.hotelscomReviewCount || Math.floor(Math.random() * 1200) + 200,
